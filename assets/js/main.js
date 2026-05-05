@@ -31,8 +31,63 @@
   const sliderSummary = document.querySelector('.slider-summary-text');
   const sliderPrev = document.querySelector('.slider-prev');
   const sliderNext = document.querySelector('.slider-next');
+  const previewPrev = document.querySelector('.slider-preview-prev .preview-card');
+  const previewNext = document.querySelector('.slider-preview-next .preview-card');
+
+  /* Generate random tilt for slides (±2 to ±5 degrees) */
+  const generateTilt = () => {
+    const sign = Math.random() > 0.5 ? 1 : -1;
+    return sign * (2 + Math.random() * 3);
+  };
+
+  const tiltMap = new Map();
+  slides.forEach((slide, idx) => {
+    tiltMap.set(idx, generateTilt());
+  });
 
   const getVisibleSlides = () => Array.from(slides).filter(slide => slide.style.display !== 'none');
+
+  const renderPreviewCard = (card, slideIndex) => {
+    if (!card) return;
+    while (card.firstChild) card.removeChild(card.firstChild);
+
+    if (slideIndex < 0 || slideIndex >= slides.length) return;
+
+    const slide = slides[slideIndex];
+    if (slide.style.display === 'none') return;
+
+    const mediaDiv = slide.querySelector('.slide-media');
+    if (!mediaDiv) return;
+
+    const video = mediaDiv.querySelector('video');
+    const img = mediaDiv.querySelector('img');
+    const placeholder = mediaDiv.querySelector('.slide-placeholder');
+
+    if (video && video.src) {
+      const videoClone = document.createElement('video');
+      videoClone.src = video.src;
+      videoClone.style.width = '100%';
+      videoClone.style.height = '100%';
+      videoClone.style.objectFit = 'cover';
+      if (video.poster) videoClone.poster = video.poster;
+      card.appendChild(videoClone);
+    } else if (img && img.src) {
+      const imgClone = document.createElement('img');
+      imgClone.src = img.src;
+      imgClone.alt = img.alt;
+      imgClone.style.width = '100%';
+      imgClone.style.height = '100%';
+      imgClone.style.objectFit = 'cover';
+      card.appendChild(imgClone);
+    } else if (placeholder) {
+      const div = document.createElement('div');
+      div.style.cssText = placeholder.style.cssText;
+      div.style.width = '100%';
+      div.style.height = '100%';
+      div.innerHTML = placeholder.innerHTML;
+      card.appendChild(div);
+    }
+  };
 
   const updateSlider = (index = 0) => {
     const visibleSlides = getVisibleSlides();
@@ -45,7 +100,15 @@
     const activeIndex = Array.from(slides).indexOf(activeSlide);
     const activePosition = visibleSlides.indexOf(activeSlide) + 1;
 
-    slides.forEach((slide, idx) => slide.classList.toggle('is-active', idx === activeIndex));
+    slides.forEach((slide, idx) => {
+      const isActive = idx === activeIndex;
+      slide.classList.toggle('is-active', isActive);
+      if (isActive) {
+        const tilt = tiltMap.get(idx);
+        slide.style.setProperty('--tilt', `${tilt}deg`);
+      }
+    });
+
     sliderDots.forEach((dot, idx) => {
       const isVisible = slides[idx].style.display !== 'none';
       dot.style.display = isVisible ? '' : 'none';
@@ -57,6 +120,12 @@
     sliderTitle.textContent = activeSlide.dataset.title || '';
     sliderEvent.textContent = activeSlide.dataset.event || '';
     sliderSummary.textContent = activeSlide.dataset.summary || '';
+
+    /* Update preview cards */
+    const prevIdx = (activeIndex - 1 + slides.length) % slides.length;
+    const nextIdx = (activeIndex + 1) % slides.length;
+    renderPreviewCard(previewPrev, prevIdx);
+    renderPreviewCard(previewNext, nextIdx);
   };
 
   const stepSlide = (direction) => {

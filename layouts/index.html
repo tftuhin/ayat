@@ -13,7 +13,7 @@
         <span class="title-line line-1">Hi, I'm</span>
         <span class="title-line line-2">
           <span class="name-wrap">
-            <span class="name-letter">T</span><span class="name-letter">a</span><span class="name-letter">h</span><span class="name-letter">r</span><span class="name-letter">i</span><span class="name-letter">n</span>
+            <span class="name-letter">A</span><span class="name-letter">y</span><span class="name-letter">a</span><span class="name-letter">t</span>
           </span>
         </span>
         <span class="title-line line-3">
@@ -214,38 +214,52 @@
   <!-- Sliding gallery -->
   <div class="gallery-slider" id="gallery-slider">
 
-    <div class="slider-stage">
-      {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
-      <div class="slide{{ if eq $index 0 }} is-active{{ end }}"
-           data-categories="{{ delimit .Params.categories " " }}"
-           data-title="{{ .Title }}"
-           data-event="{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
-           data-summary="{{ .Params.summary | default "" }}">
-        <div class="slide-media">
-          {{ if .Params.video }}
-            <video src="{{ .Params.video }}" controls class="slide-video" preload="none"
-              {{ with .Params.image }}poster="{{ . }}"{{ end }}></video>
-          {{ else if .Params.image }}
-            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" class="slide-img">
-          {{ else }}
-            <div class="slide-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg,#ffc7e1,#f9a8d4)" | safeCSS }}">
-              <span class="slide-emoji">{{ .Params.emoji | default "🎭" }}</span>
-            </div>
-          {{ end }}
-          {{ if .Params.video }}<span class="slide-play-badge">▶ Video</span>{{ end }}
+    <div class="slider-container">
+      <!-- Previous slide preview (left) -->
+      <div class="slider-preview slider-preview-prev">
+        <div class="preview-card"></div>
+      </div>
+
+      <!-- Main stage -->
+      <div class="slider-stage">
+        {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
+        <div class="slide{{ if eq $index 0 }} is-active{{ end }}"
+             data-index="{{ $index }}"
+             data-categories="{{ delimit .Params.categories " " }}"
+             data-title="{{ .Title }}"
+             data-event="{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
+             data-summary="{{ .Params.summary | default "" }}">
+          <div class="slide-media">
+            {{ if .Params.video }}
+              <video src="{{ .Params.video }}" controls class="slide-video" preload="none"
+                {{ with .Params.image }}poster="{{ . }}"{{ end }}></video>
+            {{ else if .Params.image }}
+              <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" class="slide-img">
+            {{ else }}
+              <div class="slide-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg,#ffc7e1,#f9a8d4)" | safeCSS }}">
+                <span class="slide-emoji">{{ .Params.emoji | default "🎭" }}</span>
+              </div>
+            {{ end }}
+            {{ if .Params.video }}<span class="slide-play-badge">▶ Video</span>{{ end }}
+          </div>
+        </div>
+        {{ end }}
+
+        <button class="slider-btn slider-prev" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="slider-btn slider-next" aria-label="Next slide">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="slider-counter">
+          <span class="slider-current">1</span> / <span class="slider-total">{{ len (where .Site.RegularPages "Section" "programs") }}</span>
         </div>
       </div>
-      {{ end }}
 
-      <button class="slider-btn slider-prev" aria-label="Previous slide">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="slider-btn slider-next" aria-label="Next slide">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-
-      <div class="slider-counter">
-        <span class="slider-current">1</span> / <span class="slider-total">{{ len (where .Site.RegularPages "Section" "programs") }}</span>
+      <!-- Next slide preview (right) -->
+      <div class="slider-preview slider-preview-next">
+        <div class="preview-card"></div>
       </div>
     </div>
 
