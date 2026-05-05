@@ -217,10 +217,10 @@
     <div class="slider-stage">
       {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
       <div class="slide{{ if eq $index 0 }} is-active{{ end }}"
-           data-categories="{{ delimit .Params.categories " " | lower | htmlAttr }}"
-           data-title="{{ .Title | htmlAttr }}"
-           data-event="{{ .Params.event | htmlAttr }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
-           data-summary="{{ .Params.summary | default "" | htmlAttr }}">
+           data-categories="{{ delimit .Params.categories " " }}"
+           data-title="{{ .Title }}"
+           data-event="{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
+           data-summary="{{ .Params.summary | default "" }}">
         <div class="slide-media">
           {{ if .Params.video }}
             <video src="{{ .Params.video }}" controls class="slide-video" preload="none"
