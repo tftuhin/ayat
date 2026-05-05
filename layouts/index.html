@@ -211,30 +211,59 @@
     <button class="chip" data-filter="national">🇧🇩 National Days</button>
   </div>
 
-  <!-- Polaroid scrapbook grid -->
-  <div class="scrapbook">
-    {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
-    <article class="polaroid polaroid-{{ add (mod $index 5) 1 }}" data-categories="{{ delimit .Params.categories " " }}" style="--idx: {{ $index }}">
-      <div class="polaroid-tape"></div>
-      <div class="polaroid-media">
-        {{ if .Params.image }}
-          <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
-        {{ else }}
-          <div class="polaroid-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg, #ffc7e1, #f9a8d4)" | safeCSS }};">
-            <span class="placeholder-emoji">{{ .Params.emoji | default "🎭" }}</span>
-          </div>
-        {{ end }}
-        {{ if .Params.video }}
-          <span class="play-badge" aria-label="Video">▶</span>
-        {{ end }}
+  <!-- Sliding gallery -->
+  <div class="gallery-slider" id="gallery-slider">
+
+    <div class="slider-stage">
+      {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
+      <div class="slide{{ if eq $index 0 }} is-active{{ end }}"
+           data-categories="{{ delimit .Params.categories " " | lower | htmlAttr }}"
+           data-title="{{ .Title | htmlAttr }}"
+           data-event="{{ .Params.event | htmlAttr }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
+           data-summary="{{ .Params.summary | default "" | htmlAttr }}">
+        <div class="slide-media">
+          {{ if .Params.video }}
+            <video src="{{ .Params.video }}" controls class="slide-video" preload="none"
+              {{ with .Params.image }}poster="{{ . }}"{{ end }}></video>
+          {{ else if .Params.image }}
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" class="slide-img">
+          {{ else }}
+            <div class="slide-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg,#ffc7e1,#f9a8d4)" | safeCSS }}">
+              <span class="slide-emoji">{{ .Params.emoji | default "🎭" }}</span>
+            </div>
+          {{ end }}
+          {{ if .Params.video }}<span class="slide-play-badge">▶ Video</span>{{ end }}
+        </div>
       </div>
-      <div class="polaroid-caption">
-        <h3>{{ .Title }}</h3>
-        <p>{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}</p>
-        {{ with .Params.summary }}<small>{{ . }}</small>{{ end }}
+      {{ end }}
+
+      <button class="slider-btn slider-prev" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="slider-btn slider-next" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="slider-counter">
+        <span class="slider-current">1</span> / <span class="slider-total">{{ len (where .Site.RegularPages "Section" "programs") }}</span>
       </div>
-    </article>
-    {{ end }}
+    </div>
+
+    <div class="slider-caption">
+      <div class="slider-tape"></div>
+      <h3 class="slider-title-text"></h3>
+      <p class="slider-event-text"></p>
+      <small class="slider-summary-text"></small>
+    </div>
+
+    <div class="slider-dots">
+      {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
+      <button class="slider-dot{{ if eq $index 0 }} is-active{{ end }}"
+              data-slide="{{ $index }}"
+              aria-label="Slide {{ add $index 1 }}"></button>
+      {{ end }}
+    </div>
+
   </div>
 
   <div class="gallery-note">

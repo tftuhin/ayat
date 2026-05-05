@@ -22,12 +22,90 @@
   /* ── Gallery filter chips ── */
   const chips = document.querySelectorAll('.chip');
   const polaroids = document.querySelectorAll('.polaroid');
+  const slides = document.querySelectorAll('.slide');
+  const sliderDots = document.querySelectorAll('.slider-dot');
+  const sliderCurrent = document.querySelector('.slider-current');
+  const sliderTotal = document.querySelector('.slider-total');
+  const sliderTitle = document.querySelector('.slider-title-text');
+  const sliderEvent = document.querySelector('.slider-event-text');
+  const sliderSummary = document.querySelector('.slider-summary-text');
+  const sliderPrev = document.querySelector('.slider-prev');
+  const sliderNext = document.querySelector('.slider-next');
+
+  const getVisibleSlides = () => Array.from(slides).filter(slide => slide.style.display !== 'none');
+
+  const updateSlider = (index = 0) => {
+    const visibleSlides = getVisibleSlides();
+    if (!visibleSlides.length) return;
+
+    let activeSlide = slides[index] && slides[index].style.display !== 'none'
+      ? slides[index]
+      : visibleSlides[0];
+
+    const activeIndex = Array.from(slides).indexOf(activeSlide);
+    const activePosition = visibleSlides.indexOf(activeSlide) + 1;
+
+    slides.forEach((slide, idx) => slide.classList.toggle('is-active', idx === activeIndex));
+    sliderDots.forEach((dot, idx) => {
+      const isVisible = slides[idx].style.display !== 'none';
+      dot.style.display = isVisible ? '' : 'none';
+      dot.classList.toggle('is-active', idx === activeIndex);
+    });
+
+    sliderCurrent.textContent = String(activePosition);
+    sliderTotal.textContent = String(visibleSlides.length);
+    sliderTitle.textContent = activeSlide.dataset.title || '';
+    sliderEvent.textContent = activeSlide.dataset.event || '';
+    sliderSummary.textContent = activeSlide.dataset.summary || '';
+  };
+
+  const stepSlide = (direction) => {
+    const visibleSlides = getVisibleSlides();
+    if (!visibleSlides.length) return;
+
+    const currentSlide = document.querySelector('.slide.is-active');
+    const currentIndex = visibleSlides.indexOf(currentSlide);
+    const nextIndex = (currentIndex + direction + visibleSlides.length) % visibleSlides.length;
+
+    const targetSlide = visibleSlides[nextIndex];
+    updateSlider(Array.from(slides).indexOf(targetSlide));
+  };
+
+  const applySlideFilter = (filter) => {
+    slides.forEach((slide) => {
+      const cats = (slide.dataset.categories || '').toLowerCase();
+      const match = filter === 'all' || cats.includes(filter);
+      slide.style.display = match ? '' : 'none';
+    });
+
+    updateSlider();
+  };
+
+  if (sliderPrev) {
+    sliderPrev.addEventListener('click', () => stepSlide(-1));
+  }
+
+  if (sliderNext) {
+    sliderNext.addEventListener('click', () => stepSlide(1));
+  }
+
+  sliderDots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      if (slides[idx].style.display === 'none') return;
+      updateSlider(idx);
+    });
+  });
 
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
       chips.forEach(c => c.classList.remove('is-active'));
       chip.classList.add('is-active');
       const filter = chip.dataset.filter;
+
+      if (slides.length) {
+        applySlideFilter(filter);
+        return;
+      }
 
       polaroids.forEach((p, i) => {
         const cats = (p.dataset.categories || '').toLowerCase();
@@ -45,8 +123,12 @@
     });
   });
 
+  if (slides.length) {
+    updateSlider(0);
+  }
+
   /* ── Reveal-on-scroll for cards ── */
-  const revealTargets = document.querySelectorAll('.about-card, .cert-card, .polaroid');
+  const revealTargets = document.querySelectorAll('.about-card, .cert-card, .polaroid, .slide');
 
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
