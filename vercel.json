@@ -1,5 +1,5 @@
 {
-  "buildCommand": "hugo --minify",
+  "buildCommand": "curl -L -o /tmp/hugo.tar.gz https://github.com/gohugoio/hugo/releases/download/v0.143.1/hugo_extended_0.143.1_Linux-64bit.tar.gz && tar -xzf /tmp/hugo.tar.gz -C /tmp && /tmp/hugo --minify",
   "outputDirectory": "public",
-  "framework": null
+  "installCommand": ""
 }
