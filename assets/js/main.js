@@ -26,9 +26,6 @@
   const sliderDots = document.querySelectorAll('.slider-dot');
   const sliderCurrent = document.querySelector('.slider-current');
   const sliderTotal = document.querySelector('.slider-total');
-  const sliderTitle = document.querySelector('.slider-title-text');
-  const sliderEvent = document.querySelector('.slider-event-text');
-  const sliderSummary = document.querySelector('.slider-summary-text');
   const previewPrev = document.querySelector('.slider-preview-prev .preview-card');
   const previewNext = document.querySelector('.slider-preview-next .preview-card');
 
@@ -115,9 +112,6 @@
 
     sliderCurrent.textContent = String(activePosition);
     sliderTotal.textContent = String(visibleSlides.length);
-    sliderTitle.textContent = activeSlide.dataset.title || '';
-    sliderEvent.textContent = activeSlide.dataset.event || '';
-    sliderSummary.textContent = activeSlide.dataset.summary || '';
 
     /* Update preview cards */
     const prevIdx = (activeIndex - 1 + slides.length) % slides.length;

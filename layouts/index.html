@@ -242,6 +242,11 @@
             {{ end }}
             {{ if .Params.video }}<span class="slide-play-badge">▶ Video</span>{{ end }}
           </div>
+          <div class="slide-caption">
+            <h3 class="slide-caption-title">{{ .Title }}</h3>
+            <p class="slide-caption-event">{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}</p>
+            {{ with .Params.summary }}<small class="slide-caption-summary">{{ . }}</small>{{ end }}
+          </div>
         </div>
         {{ end }}
 
@@ -254,13 +259,6 @@
       <div class="slider-preview slider-preview-next">
         <div class="preview-card"></div>
       </div>
-    </div>
-
-    <div class="slider-caption">
-      <div class="slider-tape"></div>
-      <h3 class="slider-title-text"></h3>
-      <p class="slider-event-text"></p>
-      <small class="slider-summary-text"></small>
     </div>
 
     <div class="slider-dots">
