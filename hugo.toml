@@ -1,0 +1,25 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Tahrin Jahan Ayat — Child Artist Portfolio"
+
+[params]
+  description = "Tahrin Jahan Ayat — A bright, expressive young performer specializing in poem recitation, storytelling, and dance."
+  email = "tuhin59083@gmail.com"
+  artistName = "Tahrin Jahan Ayat"
+  tagline = "Storyteller · Reciter · Dancer"
+  age = 6
+  school = "Milestone School & College"
+  grade = "Class One"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"

@@ -1,0 +1,35 @@
+{{ define "main" }}
+<section class="list-section">
+  <div class="section-header">
+    <span class="eyebrow">{{ .Section | humanize }}</span>
+    <h1 class="section-title">{{ .Title }}</h1>
+  </div>
+
+  <div class="scrapbook">
+    {{ range $index, $page := .Pages }}
+    <article class="polaroid polaroid-{{ add (mod $index 5) 1 }}" style="--idx: {{ $index }}">
+      <div class="polaroid-tape"></div>
+      <div class="polaroid-media">
+        {{ if .Params.image }}
+          <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy">
+        {{ else }}
+          <div class="polaroid-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg, #ffc7e1, #f9a8d4)" | safeCSS }};">
+            <span class="placeholder-emoji">{{ .Params.emoji | default "🎭" }}</span>
+          </div>
+        {{ end }}
+      </div>
+      <div class="polaroid-caption">
+        <h3>{{ .Title }}</h3>
+        <p>{{ .Params.event }}{{ .Params.issuer }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}</p>
+      </div>
+      <a href="{{ .RelPermalink }}" class="polaroid-link" aria-label="View {{ .Title }}"></a>
+    </article>
+    {{ end }}
+  </div>
+</section>
+
+<style>
+.list-section { padding-top: 8rem; }
+.polaroid-link { position: absolute; inset: 0; }
+</style>
+{{ end }}

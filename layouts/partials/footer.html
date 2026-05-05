@@ -1,0 +1,20 @@
+<footer class="site-footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-bow">🎀</div>
+    <h2 class="footer-heading">Let's create magic together</h2>
+    <p class="footer-sub">For collaborations, performances & casting inquiries</p>
+
+    <a href="mailto:{{ .Site.Params.email }}" class="footer-mail">
+      <span class="mail-icon">✉</span>
+      <span>{{ .Site.Params.email }}</span>
+    </a>
+
+    <div class="footer-decor">
+      <span>✦</span><span>♡</span><span>🦄</span><span>♡</span><span>✦</span>
+    </div>
+
+    <p class="footer-copyright">
+      © {{ now.Year }} {{ .Site.Params.artistName }} · A young storyteller's stage
+    </p>
+  </div>
+</footer>
