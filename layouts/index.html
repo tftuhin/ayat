@@ -245,13 +245,6 @@
         </div>
         {{ end }}
 
-        <button class="slider-btn slider-prev" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="slider-btn slider-next" aria-label="Next slide">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-
         <div class="slider-counter">
           <span class="slider-current">1</span> / <span class="slider-total">{{ len (where .Site.RegularPages "Section" "programs") }}</span>
         </div>

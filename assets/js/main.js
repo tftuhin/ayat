@@ -29,8 +29,6 @@
   const sliderTitle = document.querySelector('.slider-title-text');
   const sliderEvent = document.querySelector('.slider-event-text');
   const sliderSummary = document.querySelector('.slider-summary-text');
-  const sliderPrev = document.querySelector('.slider-prev');
-  const sliderNext = document.querySelector('.slider-next');
   const previewPrev = document.querySelector('.slider-preview-prev .preview-card');
   const previewNext = document.querySelector('.slider-preview-next .preview-card');
 
@@ -150,12 +148,12 @@
     updateSlider();
   };
 
-  if (sliderPrev) {
-    sliderPrev.addEventListener('click', () => stepSlide(-1));
+  if (previewPrev) {
+    previewPrev.addEventListener('click', () => stepSlide(-1));
   }
 
-  if (sliderNext) {
-    sliderNext.addEventListener('click', () => stepSlide(1));
+  if (previewNext) {
+    previewNext.addEventListener('click', () => stepSlide(1));
   }
 
   sliderDots.forEach((dot, idx) => {
