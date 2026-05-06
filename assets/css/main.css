@@ -480,6 +480,7 @@ section {
   aspect-ratio: 4 / 5;
 }
 .portrait-svg { width: 100%; height: 100%; display: block; }
+.portrait-photo { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 
 .frame-caption {
   position: absolute;
