@@ -836,14 +836,8 @@ section {
 
 .slider-stage {
   position: relative;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow:
-    0 30px 80px -20px rgba(190, 24, 93, 0.35),
-    0 0 0 8px rgba(255, 255, 255, 0.95),
-    0 0 0 11px var(--pink-200);
-  background: var(--pink-50);
   width: 100%;
+  padding: 1.2rem;
 }
 
 .slide {
@@ -1023,7 +1017,7 @@ section {
 
 .slider-counter {
   position: absolute;
-  bottom: 0.9rem; right: 0.9rem;
+  bottom: calc(1.2rem + 0.9rem); right: calc(1.2rem + 0.9rem);
   padding: 0.28rem 0.75rem;
   background: rgba(0, 0, 0, 0.42);
   color: #fff;
