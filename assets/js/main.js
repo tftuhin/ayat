@@ -239,6 +239,34 @@
     }
   });
 
+  /* ── Video controls (play / pause / fullscreen) ── */
+  document.querySelectorAll('.slide-vid-controls').forEach(controls => {
+    const video = controls.closest('.slide-media')?.querySelector('video');
+    if (!video) return;
+    const playBtn  = controls.querySelector('.vid-play-btn');
+    const fsBtn    = controls.querySelector('.vid-fullscreen-btn');
+    const iconPlay  = playBtn?.querySelector('.vid-icon-play');
+    const iconPause = playBtn?.querySelector('.vid-icon-pause');
+
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        video.paused ? video.play() : video.pause();
+      });
+      video.addEventListener('play',  () => { iconPlay.style.display = 'none'; iconPause.style.display = ''; });
+      video.addEventListener('pause', () => { iconPlay.style.display = '';     iconPause.style.display = 'none'; });
+      video.addEventListener('ended', () => { iconPlay.style.display = '';     iconPause.style.display = 'none'; });
+    }
+
+    if (fsBtn) {
+      fsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const target = video;
+        (target.requestFullscreen || target.webkitRequestFullscreen || target.mozRequestFullScreen)?.call(target);
+      });
+    }
+  });
+
   /* ── Subtle parallax on hero portrait ── */
   const portrait = document.querySelector('.portrait-frame');
   if (portrait && window.matchMedia('(min-width: 900px)').matches) {
