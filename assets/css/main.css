@@ -841,8 +841,8 @@ section {
 
 /* ── 5 coverflow positions ── */
 .slide.pos-center {
-  width: 320px;
-  left: calc(50% - 160px);
+  width: 360px;
+  left: calc(50% - 180px);
   transform: rotateZ(var(--tilt, 0deg)) scale(1);
   opacity: 1; z-index: 5;
   pointer-events: auto; cursor: default;
@@ -1447,8 +1447,8 @@ section {
   /* On mobile show only center + adjacent, hide far */
   /* Mobile: full-width center card, hide all side cards */
   .coverflow-stage { height: auto; min-height: 420px; margin: 0 0.5rem; overflow: hidden; }
-  .slide { width: calc(100vw - 4rem); left: 2rem; }
-  .slide.pos-center { width: calc(100vw - 4rem); left: 2rem; }
+  .slide { width: calc(100vw - 2rem); left: 1rem; }
+  .slide.pos-center { width: calc(100vw - 2rem); left: 1rem; }
   .slide.pos-prev, .slide.pos-next,
   .slide.pos-far-prev, .slide.pos-far-next { opacity: 0; pointer-events: none; transform: none; }
   .slider-prev { left: 0.25rem; }

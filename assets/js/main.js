@@ -49,6 +49,18 @@
     const visIdx   = visibleSlides.indexOf(activeSlide);
     const n        = visibleSlides.length;
 
+    /* Pause any playing video before moving away */
+    slides.forEach(s => {
+      const v = s.querySelector('video');
+      if (v && !v.paused) {
+        v.pause();
+        const iconPlay  = s.querySelector('.vid-icon-play');
+        const iconPause = s.querySelector('.vid-icon-pause');
+        if (iconPlay)  iconPlay.style.display  = '';
+        if (iconPause) iconPause.style.display = 'none';
+      }
+    });
+
     /* Clear all position classes */
     slides.forEach(s => s.classList.remove(...CF_POSITIONS, 'is-active'));
 
