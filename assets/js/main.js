@@ -29,6 +29,13 @@
 
   const CF_POSITIONS = ['pos-far-prev', 'pos-prev', 'pos-center', 'pos-next', 'pos-far-next'];
 
+  /* Random tilt per slide (±1.5–3.5°) — set once, reused on every activation */
+  const tiltMap = new Map();
+  slides.forEach((_, idx) => {
+    const sign = Math.random() > 0.5 ? 1 : -1;
+    tiltMap.set(idx, sign * (1.5 + Math.random() * 2));
+  });
+
   const getVisibleSlides = () => Array.from(slides).filter(s => s.style.display !== 'none');
 
   const updateSlider = (index = 0) => {
@@ -52,6 +59,9 @@
       visibleSlides[vTarget].classList.add(pos);
     });
     activeSlide.classList.add('is-active');
+
+    /* Apply tilt to center card */
+    activeSlide.style.setProperty('--tilt', `${tiltMap.get(realIdx) || 0}deg`);
 
     /* Dots */
     sliderDots.forEach((dot, idx) => {

@@ -49,7 +49,7 @@
         <div class="frame-tape tape-tl"></div>
         <div class="frame-tape tape-br"></div>
         <div class="portrait-inner">
-          <img src="/images/ayat-hero.png" alt="Ayat in traditional dance costume" class="portrait-photo">
+          <img src="/images/ayat-hero.png" alt="Ayat in traditional dance costume" class="portrait-photo" fetchpriority="high" decoding="async" width="966" height="966">
         </div>
         <div class="frame-caption">
           <span>Ayat · age 6 ✨</span>
@@ -68,61 +68,6 @@
   <div class="scroll-hint">
     <span>scroll to explore</span>
     <span class="scroll-arrow">↓</span>
-  </div>
-</section>
-
-<!-- ABOUT SECTION -->
-<section class="about" id="about">
-  <div class="section-header">
-    <span class="eyebrow">About me</span>
-    <h2 class="section-title">A little <span class="title-accent">storyteller</span> with big dreams</h2>
-  </div>
-
-  <div class="about-grid">
-    <div class="about-card card-recite">
-      <div class="card-icon">🎤</div>
-      <h3>Poem Recitation</h3>
-      <p>Excellent memorization with natural rhythm, voice modulation, and expressive facial gestures that bring every verse to life.</p>
-      <div class="card-decor"></div>
-    </div>
-
-    <div class="about-card card-dance">
-      <div class="card-icon">💃</div>
-      <h3>Dance</h3>
-      <p>Energetic and graceful — comfortable learning choreography and executing stage routines for cultural events.</p>
-      <div class="card-decor"></div>
-    </div>
-
-    <div class="about-card card-story">
-      <div class="card-icon">📖</div>
-      <h3>Storytelling</h3>
-      <p>Engaging delivery style. Skilled at narrating traditional Bengali fables and fun children's stories.</p>
-      <div class="card-decor"></div>
-    </div>
-
-    <div class="about-card card-stage">
-      <div class="card-icon">🎭</div>
-      <h3>Stage & Camera</h3>
-      <p>Naturally charismatic, unafraid of large audiences, and comfortable taking direction from teachers and directors.</p>
-      <div class="card-decor"></div>
-    </div>
-  </div>
-
-  <div class="about-strip">
-    <div class="strip-item">
-      <span class="strip-num">3+</span>
-      <span class="strip-label">Years performing</span>
-    </div>
-    <div class="strip-divider"></div>
-    <div class="strip-item">
-      <span class="strip-num">2</span>
-      <span class="strip-label">Languages spoken</span>
-    </div>
-    <div class="strip-divider"></div>
-    <div class="strip-item">
-      <span class="strip-num">∞</span>
-      <span class="strip-label">Stories to tell</span>
-    </div>
   </div>
 </section>
 
@@ -178,7 +123,7 @@
             </div>
             <span class="slide-play-badge">▶ Video</span>
           {{ else if .Params.image }}
-            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" class="slide-img">
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" decoding="async" class="slide-img">
           {{ else }}
             <div class="slide-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg,#ffc7e1,#f9a8d4)" | safeCSS }}">
               <span class="slide-emoji">{{ .Params.emoji | default "🎭" }}</span>
@@ -208,6 +153,61 @@
   <div class="gallery-note">
     <span class="note-pin">📌</span>
     <p>More memories being added after every cultural program at Milestone School & College</p>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about" id="about">
+  <div class="section-header">
+    <span class="eyebrow">About me</span>
+    <h2 class="section-title">A little <span class="title-accent">storyteller</span> with big dreams</h2>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-card card-recite">
+      <div class="card-icon">🎤</div>
+      <h3>Poem Recitation</h3>
+      <p>Excellent memorization with natural rhythm, voice modulation, and expressive facial gestures that bring every verse to life.</p>
+      <div class="card-decor"></div>
+    </div>
+
+    <div class="about-card card-dance">
+      <div class="card-icon">💃</div>
+      <h3>Dance</h3>
+      <p>Energetic and graceful — comfortable learning choreography and executing stage routines for cultural events.</p>
+      <div class="card-decor"></div>
+    </div>
+
+    <div class="about-card card-story">
+      <div class="card-icon">📖</div>
+      <h3>Storytelling</h3>
+      <p>Engaging delivery style. Skilled at narrating traditional Bengali fables and fun children's stories.</p>
+      <div class="card-decor"></div>
+    </div>
+
+    <div class="about-card card-stage">
+      <div class="card-icon">🎭</div>
+      <h3>Stage & Camera</h3>
+      <p>Naturally charismatic, unafraid of large audiences, and comfortable taking direction from teachers and directors.</p>
+      <div class="card-decor"></div>
+    </div>
+  </div>
+
+  <div class="about-strip">
+    <div class="strip-item">
+      <span class="strip-num">3+</span>
+      <span class="strip-label">Years performing</span>
+    </div>
+    <div class="strip-divider"></div>
+    <div class="strip-item">
+      <span class="strip-num">2</span>
+      <span class="strip-label">Languages spoken</span>
+    </div>
+    <div class="strip-divider"></div>
+    <div class="strip-item">
+      <span class="strip-num">∞</span>
+      <span class="strip-label">Stories to tell</span>
+    </div>
   </div>
 </section>
 
