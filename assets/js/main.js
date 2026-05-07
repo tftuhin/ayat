@@ -26,8 +26,10 @@
   const sliderDots = document.querySelectorAll('.slider-dot');
   const sliderCurrent = document.querySelector('.slider-current');
   const sliderTotal = document.querySelector('.slider-total');
-  const previewPrev = document.querySelector('.slider-preview-prev .preview-card');
-  const previewNext = document.querySelector('.slider-preview-next .preview-card');
+  const previewFarPrev = document.querySelector('.slider-preview-far-prev .preview-card');
+  const previewPrev    = document.querySelector('.slider-preview-prev .preview-card');
+  const previewNext    = document.querySelector('.slider-preview-next .preview-card');
+  const previewFarNext = document.querySelector('.slider-preview-far-next .preview-card');
 
   /* Generate random tilt for slides (±2 to ±5 degrees) */
   const generateTilt = () => {
@@ -130,11 +132,12 @@
     sliderCurrent.textContent = String(activePosition);
     sliderTotal.textContent = String(visibleSlides.length);
 
-    /* Update preview cards */
-    const prevIdx = (activeIndex - 1 + slides.length) % slides.length;
-    const nextIdx = (activeIndex + 1) % slides.length;
-    renderPreviewCard(previewPrev, prevIdx);
-    renderPreviewCard(previewNext, nextIdx);
+    /* Update all 4 preview cards */
+    const n = slides.length;
+    renderPreviewCard(previewFarPrev, (activeIndex - 2 + n) % n);
+    renderPreviewCard(previewPrev,    (activeIndex - 1 + n) % n);
+    renderPreviewCard(previewNext,    (activeIndex + 1) % n);
+    renderPreviewCard(previewFarNext, (activeIndex + 2) % n);
   };
 
   const stepSlide = (direction) => {
@@ -159,12 +162,20 @@
     updateSlider();
   };
 
+  if (previewFarPrev) {
+    previewFarPrev.addEventListener('click', () => stepSlide(-2));
+  }
+
   if (previewPrev) {
     previewPrev.addEventListener('click', () => stepSlide(-1));
   }
 
   if (previewNext) {
     previewNext.addEventListener('click', () => stepSlide(1));
+  }
+
+  if (previewFarNext) {
+    previewFarNext.addEventListener('click', () => stepSlide(2));
   }
 
   const sliderPrevBtn = document.querySelector('.slider-btn.slider-prev');
