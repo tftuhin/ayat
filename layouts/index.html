@@ -146,6 +146,8 @@
   <!-- Sliding gallery -->
   <div class="gallery-slider" id="gallery-slider">
 
+    <button class="slider-btn slider-prev" aria-label="Previous">&#8249;</button>
+
     <div class="slider-container">
       <!-- Previous slide preview (left) -->
       <div class="slider-preview slider-preview-prev">
@@ -191,6 +193,7 @@
             {{ end }}
           </div>
           <div class="slide-caption">
+            {{ with .Params.categories }}<span class="slide-caption-category">{{ index . 0 | upper }}</span>{{ end }}
             <h3 class="slide-caption-title">{{ .Title }}</h3>
             <p class="slide-caption-event">{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}</p>
             {{ with .Params.summary }}<small class="slide-caption-summary">{{ . }}</small>{{ end }}
@@ -208,6 +211,8 @@
         <div class="preview-card"></div>
       </div>
     </div>
+
+    <button class="slider-btn slider-next" aria-label="Next">&#8250;</button>
 
     <div class="slider-dots">
       {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
