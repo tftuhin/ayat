@@ -19,180 +19,89 @@
     );
   }
 
-  /* ── Gallery filter chips ── */
+  /* ── Gallery: 3D Coverflow ── */
   const chips = document.querySelectorAll('.chip');
   const polaroids = document.querySelectorAll('.polaroid');
   const slides = document.querySelectorAll('.slide');
   const sliderDots = document.querySelectorAll('.slider-dot');
   const sliderCurrent = document.querySelector('.slider-current');
   const sliderTotal = document.querySelector('.slider-total');
-  const previewFarPrev = document.querySelector('.slider-preview-far-prev .preview-card');
-  const previewPrev    = document.querySelector('.slider-preview-prev .preview-card');
-  const previewNext    = document.querySelector('.slider-preview-next .preview-card');
-  const previewFarNext = document.querySelector('.slider-preview-far-next .preview-card');
 
-  /* Generate random tilt for slides (±2 to ±5 degrees) */
-  const generateTilt = () => {
-    const sign = Math.random() > 0.5 ? 1 : -1;
-    return sign * (2 + Math.random() * 3);
-  };
+  const CF_POSITIONS = ['pos-far-prev', 'pos-prev', 'pos-center', 'pos-next', 'pos-far-next'];
 
-  const tiltMap = new Map();
-  slides.forEach((slide, idx) => {
-    tiltMap.set(idx, generateTilt());
-  });
-
-  const getVisibleSlides = () => Array.from(slides).filter(slide => slide.style.display !== 'none');
-
-  const renderPreviewCard = (card, slideIndex) => {
-    if (!card) return;
-    while (card.firstChild) card.removeChild(card.firstChild);
-
-    if (slideIndex < 0 || slideIndex >= slides.length) return;
-
-    const slide = slides[slideIndex];
-    if (slide.style.display === 'none') return;
-
-    const mediaDiv = slide.querySelector('.slide-media');
-    if (!mediaDiv) return;
-
-    /* Build polaroid frame: media area + caption */
-    const mediaWrap = document.createElement('div');
-    mediaWrap.className = 'preview-card-media';
-
-    const video = mediaDiv.querySelector('video');
-    const img = mediaDiv.querySelector('img');
-    const placeholder = mediaDiv.querySelector('.slide-placeholder');
-
-    if (video && video.src) {
-      const videoClone = document.createElement('video');
-      videoClone.src = video.src;
-      videoClone.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      if (video.poster) videoClone.poster = video.poster;
-      mediaWrap.appendChild(videoClone);
-    } else if (img && img.src) {
-      const imgClone = document.createElement('img');
-      imgClone.src = img.src;
-      imgClone.alt = img.alt;
-      imgClone.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      mediaWrap.appendChild(imgClone);
-    } else if (placeholder) {
-      const div = document.createElement('div');
-      div.style.cssText = placeholder.style.cssText + ';width:100%;height:100%;';
-      div.innerHTML = placeholder.innerHTML;
-      mediaWrap.appendChild(div);
-    }
-
-    const captionWrap = document.createElement('div');
-    captionWrap.className = 'preview-card-caption';
-
-    const cats = (slide.dataset.categories || '').trim().split(' ').filter(Boolean);
-    if (cats.length) {
-      const catEl = document.createElement('span');
-      catEl.className = 'preview-card-category';
-      catEl.textContent = cats[0].toUpperCase();
-      captionWrap.appendChild(catEl);
-    }
-
-    const titleEl = document.createElement('span');
-    titleEl.className = 'preview-card-title';
-    titleEl.textContent = slide.dataset.title || '';
-    captionWrap.appendChild(titleEl);
-
-    card.appendChild(mediaWrap);
-    card.appendChild(captionWrap);
-  };
+  const getVisibleSlides = () => Array.from(slides).filter(s => s.style.display !== 'none');
 
   const updateSlider = (index = 0) => {
     const visibleSlides = getVisibleSlides();
     if (!visibleSlides.length) return;
 
-    let activeSlide = slides[index] && slides[index].style.display !== 'none'
-      ? slides[index]
-      : visibleSlides[0];
+    let activeSlide = (slides[index] && slides[index].style.display !== 'none')
+      ? slides[index] : visibleSlides[0];
 
-    const activeIndex = Array.from(slides).indexOf(activeSlide);
-    const activePosition = visibleSlides.indexOf(activeSlide) + 1;
+    const realIdx  = Array.from(slides).indexOf(activeSlide);
+    const visIdx   = visibleSlides.indexOf(activeSlide);
+    const n        = visibleSlides.length;
 
-    slides.forEach((slide, idx) => {
-      const isActive = idx === activeIndex;
-      slide.classList.toggle('is-active', isActive);
-      if (isActive) {
-        const tilt = tiltMap.get(idx);
-        slide.style.setProperty('--tilt', `${tilt}deg`);
-      }
+    /* Clear all position classes */
+    slides.forEach(s => s.classList.remove(...CF_POSITIONS, 'is-active'));
+
+    /* Assign the 5 positions around the active slide */
+    CF_POSITIONS.forEach((pos, i) => {
+      const offset = i - 2; // -2 -1 0 +1 +2
+      const vTarget = (visIdx + offset + n) % n;
+      visibleSlides[vTarget].classList.add(pos);
     });
+    activeSlide.classList.add('is-active');
 
+    /* Dots */
     sliderDots.forEach((dot, idx) => {
-      const isVisible = slides[idx].style.display !== 'none';
+      const isVisible = slides[idx] && slides[idx].style.display !== 'none';
       dot.style.display = isVisible ? '' : 'none';
-      dot.classList.toggle('is-active', idx === activeIndex);
+      dot.classList.toggle('is-active', idx === realIdx);
     });
 
-    sliderCurrent.textContent = String(activePosition);
-    sliderTotal.textContent = String(visibleSlides.length);
-
-    /* Update all 4 preview cards */
-    const n = slides.length;
-    renderPreviewCard(previewFarPrev, (activeIndex - 2 + n) % n);
-    renderPreviewCard(previewPrev,    (activeIndex - 1 + n) % n);
-    renderPreviewCard(previewNext,    (activeIndex + 1) % n);
-    renderPreviewCard(previewFarNext, (activeIndex + 2) % n);
+    if (sliderCurrent) sliderCurrent.textContent = String(visIdx + 1);
+    if (sliderTotal)   sliderTotal.textContent   = String(n);
   };
 
   const stepSlide = (direction) => {
     const visibleSlides = getVisibleSlides();
     if (!visibleSlides.length) return;
-
-    const currentSlide = document.querySelector('.slide.is-active');
-    const currentIndex = visibleSlides.indexOf(currentSlide);
-    const nextIndex = (currentIndex + direction + visibleSlides.length) % visibleSlides.length;
-
-    const targetSlide = visibleSlides[nextIndex];
-    updateSlider(Array.from(slides).indexOf(targetSlide));
+    const current  = document.querySelector('.slide.pos-center') || visibleSlides[0];
+    const visIdx   = visibleSlides.indexOf(current);
+    const nextVIdx = (visIdx + direction + visibleSlides.length) % visibleSlides.length;
+    updateSlider(Array.from(slides).indexOf(visibleSlides[nextVIdx]));
   };
 
   const applySlideFilter = (filter) => {
-    slides.forEach((slide) => {
+    slides.forEach(slide => {
       const cats = (slide.dataset.categories || '').toLowerCase();
-      const match = filter === 'all' || cats.includes(filter);
-      slide.style.display = match ? '' : 'none';
+      slide.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
     });
-
     updateSlider();
   };
 
-  if (previewFarPrev) {
-    previewFarPrev.addEventListener('click', () => stepSlide(-2));
-  }
-
-  if (previewPrev) {
-    previewPrev.addEventListener('click', () => stepSlide(-1));
-  }
-
-  if (previewNext) {
-    previewNext.addEventListener('click', () => stepSlide(1));
-  }
-
-  if (previewFarNext) {
-    previewFarNext.addEventListener('click', () => stepSlide(2));
-  }
+  /* Click on side cards to navigate */
+  slides.forEach(slide => {
+    slide.addEventListener('click', () => {
+      if (slide.classList.contains('pos-prev') || slide.classList.contains('pos-far-prev')) {
+        const steps = slide.classList.contains('pos-far-prev') ? -2 : -1;
+        stepSlide(steps);
+      } else if (slide.classList.contains('pos-next') || slide.classList.contains('pos-far-next')) {
+        const steps = slide.classList.contains('pos-far-next') ? 2 : 1;
+        stepSlide(steps);
+      }
+    });
+  });
 
   const sliderPrevBtn = document.querySelector('.slider-btn.slider-prev');
   const sliderNextBtn = document.querySelector('.slider-btn.slider-next');
-
-  if (sliderPrevBtn) {
-    sliderPrevBtn.addEventListener('click', () => stepSlide(-1));
-  }
-
-  if (sliderNextBtn) {
-    sliderNextBtn.addEventListener('click', () => stepSlide(1));
-  }
+  if (sliderPrevBtn) sliderPrevBtn.addEventListener('click', () => stepSlide(-1));
+  if (sliderNextBtn) sliderNextBtn.addEventListener('click', () => stepSlide(1));
 
   sliderDots.forEach((dot, idx) => {
     dot.addEventListener('click', () => {
-      if (slides[idx].style.display === 'none') return;
-      updateSlider(idx);
+      if (slides[idx] && slides[idx].style.display !== 'none') updateSlider(idx);
     });
   });
 
@@ -228,7 +137,7 @@
   }
 
   /* ── Reveal-on-scroll for cards ── */
-  const revealTargets = document.querySelectorAll('.about-card, .cert-card, .polaroid, .slide');
+  const revealTargets = document.querySelectorAll('.about-card, .cert-card, .polaroid');
 
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {

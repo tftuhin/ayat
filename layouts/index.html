@@ -148,78 +148,49 @@
 
     <button class="slider-btn slider-prev" aria-label="Previous">&#8249;</button>
 
-    <div class="slider-container">
-      <!-- Far-left preview -->
-      <div class="slider-preview slider-preview-far-prev">
-        <div class="preview-card"></div>
-      </div>
-
-      <!-- Near-left preview -->
-      <div class="slider-preview slider-preview-prev">
-        <div class="preview-card"></div>
-      </div>
-
-      <!-- Main stage -->
-      <div class="slider-stage">
-        {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
-        <div class="slide{{ if eq $index 0 }} is-active{{ end }}"
-             data-index="{{ $index }}"
-             data-categories="{{ delimit .Params.categories " " }}"
-             data-title="{{ .Title }}"
-             data-event="{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
-             data-summary="{{ .Params.summary | default "" }}">
-          <div class="slide-media">
-            {{ if .Params.video }}
-              <video src="{{ .Params.video }}" class="slide-video" preload="none"
-                {{ with .Params.image }}poster="{{ . }}"{{ end }}></video>
-              <div class="slide-vid-controls">
-                <button class="vid-play-btn" aria-label="Play / Pause">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
-                    <path class="vid-icon-play" d="M8 5v14l11-7z" fill="currentColor"/>
-                    <g class="vid-icon-pause" style="display:none">
-                      <rect x="6" y="4" width="4" height="16" rx="1.5" fill="currentColor"/>
-                      <rect x="14" y="4" width="4" height="16" rx="1.5" fill="currentColor"/>
-                    </g>
-                  </svg>
-                </button>
-                <button class="vid-fullscreen-btn" aria-label="Enter fullscreen">
-                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/>
-                  </svg>
-                </button>
-              </div>
-              <span class="slide-play-badge">▶ Video</span>
-            {{ else if .Params.image }}
-              <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" class="slide-img">
-            {{ else }}
-              <div class="slide-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg,#ffc7e1,#f9a8d4)" | safeCSS }}">
-                <span class="slide-emoji">{{ .Params.emoji | default "🎭" }}</span>
-              </div>
-            {{ end }}
-          </div>
-          <div class="slide-caption">
-            {{ with .Params.categories }}<span class="slide-caption-category">{{ index . 0 | upper }}</span>{{ end }}
-            <h3 class="slide-caption-title">{{ .Title }}</h3>
-            <p class="slide-caption-event">{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}</p>
-            {{ with .Params.summary }}<small class="slide-caption-summary">{{ . }}</small>{{ end }}
-          </div>
+    <div class="coverflow-stage">
+      {{ range $index, $program := where .Site.RegularPages "Section" "programs" }}
+      <div class="slide"
+           data-index="{{ $index }}"
+           data-categories="{{ delimit .Params.categories " " }}"
+           data-title="{{ .Title }}"
+           data-event="{{ .Params.event }}{{ if .Params.year }} · {{ .Params.year }}{{ end }}"
+           data-summary="{{ .Params.summary | default "" }}">
+        <div class="slide-media">
+          {{ if .Params.video }}
+            <video src="{{ .Params.video }}" class="slide-video" preload="none"
+              {{ with .Params.image }}poster="{{ . }}"{{ end }}></video>
+            <div class="slide-vid-controls">
+              <button class="vid-play-btn" aria-label="Play / Pause">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+                  <path class="vid-icon-play" d="M8 5v14l11-7z" fill="currentColor"/>
+                  <g class="vid-icon-pause" style="display:none">
+                    <rect x="6" y="4" width="4" height="16" rx="1.5" fill="currentColor"/>
+                    <rect x="14" y="4" width="4" height="16" rx="1.5" fill="currentColor"/>
+                  </g>
+                </svg>
+              </button>
+              <button class="vid-fullscreen-btn" aria-label="Enter fullscreen">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+            <span class="slide-play-badge">▶ Video</span>
+          {{ else if .Params.image }}
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" loading="lazy" class="slide-img">
+          {{ else }}
+            <div class="slide-placeholder" style="background: {{ .Params.color | default "linear-gradient(135deg,#ffc7e1,#f9a8d4)" | safeCSS }}">
+              <span class="slide-emoji">{{ .Params.emoji | default "🎭" }}</span>
+            </div>
+          {{ end }}
         </div>
-        {{ end }}
-
-        <div class="slider-counter">
-          <span class="slider-current">1</span> / <span class="slider-total">{{ len (where .Site.RegularPages "Section" "programs") }}</span>
+        <div class="slide-caption">
+          {{ with .Params.categories }}<span class="slide-caption-category">{{ index . 0 | upper }}</span>{{ end }}
+          <h3 class="slide-caption-title">{{ .Title }}</h3>
         </div>
       </div>
-
-      <!-- Near-right preview -->
-      <div class="slider-preview slider-preview-next">
-        <div class="preview-card"></div>
-      </div>
-
-      <!-- Far-right preview -->
-      <div class="slider-preview slider-preview-far-next">
-        <div class="preview-card"></div>
-      </div>
+      {{ end }}
     </div>
 
     <button class="slider-btn slider-next" aria-label="Next">&#8250;</button>
