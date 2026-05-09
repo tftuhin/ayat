@@ -265,4 +265,21 @@
   </div>
 </section>
 
+<!-- MODAL / POPUP -->
+<div class="modal" id="media-modal">
+  <div class="modal-backdrop"></div>
+  <div class="modal-container">
+    <button class="modal-close" aria-label="Close modal">&times;</button>
+    <div class="modal-content">
+      <img id="modal-image" src="" alt="" class="modal-image" style="display:none;">
+      <video id="modal-video" class="modal-video" controls style="display:none;"></video>
+      <div id="modal-info" class="modal-info">
+        <h2 id="modal-title"></h2>
+        <p id="modal-event"></p>
+        <p id="modal-summary"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{ end }}

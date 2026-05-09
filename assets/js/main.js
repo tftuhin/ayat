@@ -103,10 +103,20 @@
     updateSlider();
   };
 
-  /* Click on side cards to navigate */
+  /* Click on side cards to navigate, center card to open modal */
   slides.forEach(slide => {
-    slide.addEventListener('click', () => {
-      if (slide.classList.contains('pos-prev') || slide.classList.contains('pos-far-prev')) {
+    slide.addEventListener('click', (e) => {
+      if (slide.classList.contains('pos-center')) {
+        e.stopPropagation();
+        const data = {
+          title: slide.dataset.title,
+          event: slide.dataset.event,
+          summary: slide.dataset.summary,
+          image: slide.querySelector('.slide-img')?.src,
+          video: slide.querySelector('.slide-video')?.src
+        };
+        openModal(data);
+      } else if (slide.classList.contains('pos-prev') || slide.classList.contains('pos-far-prev')) {
         const steps = slide.classList.contains('pos-far-prev') ? -2 : -1;
         stepSlide(steps);
       } else if (slide.classList.contains('pos-next') || slide.classList.contains('pos-far-next')) {
@@ -251,4 +261,65 @@
       portrait.style.transform = '';
     });
   }
+
+  /* ── Gallery & Award Modal / Popup ── */
+  const modal = document.getElementById('media-modal');
+  const modalBackdrop = document.querySelector('.modal-backdrop');
+  const modalClose = document.querySelector('.modal-close');
+  const modalImage = document.getElementById('modal-image');
+  const modalVideo = document.getElementById('modal-video');
+  const modalInfo = document.getElementById('modal-info');
+  const modalTitle = document.getElementById('modal-title');
+  const modalEvent = document.getElementById('modal-event');
+  const modalSummary = document.getElementById('modal-summary');
+
+  const openModal = (data) => {
+    modalImage.style.display = 'none';
+    modalVideo.style.display = 'none';
+    if (data.image) {
+      modalImage.src = data.image;
+      modalImage.alt = data.title;
+      modalImage.style.display = 'block';
+    } else if (data.video) {
+      modalVideo.src = data.video;
+      modalVideo.style.display = 'block';
+    }
+    modalTitle.textContent = data.title;
+    modalEvent.textContent = data.event || '';
+    modalSummary.textContent = data.summary || '';
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (modalVideo) modalVideo.pause();
+  };
+
+  document.querySelectorAll('.cert-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const title = card.querySelector('h3')?.textContent;
+      const meta = card.querySelector('.cert-meta')?.textContent;
+      const desc = card.querySelector('.cert-desc')?.textContent;
+      const img = card.querySelector('img');
+      const data = {
+        title: title || 'Award',
+        event: meta || '',
+        summary: desc || '',
+        image: img?.src
+      };
+      openModal(data);
+    });
+  });
+
+  modalClose?.addEventListener('click', closeModal);
+  modalBackdrop?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
 })();

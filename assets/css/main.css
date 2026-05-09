@@ -1387,6 +1387,119 @@ section {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+/* ═══ MODAL / POPUP ═══ */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modal.is-open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.modal-container {
+  position: relative;
+  z-index: 10;
+  background: white;
+  border-radius: 16px;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0 20px 60px rgba(190, 24, 93, 0.3);
+  animation: modal-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(236, 72, 153, 0.1);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  color: var(--pink-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 11;
+}
+
+.modal-close:hover {
+  background: var(--pink-100);
+  transform: scale(1.1);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-image,
+.modal-video {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-video {
+  background: #000;
+}
+
+.modal-info {
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 197, 225, 0.05) 0%, rgba(192, 132, 252, 0.05) 100%);
+}
+
+.modal-info h2 {
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+  font-size: 1.5rem;
+}
+
+.modal-info p {
+  margin: 0.5rem 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+#modal-event {
+  font-weight: 600;
+  color: var(--pink-600);
+}
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
