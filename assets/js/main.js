@@ -389,73 +389,172 @@
     }
   });
 
-  /* ── Confetti pop on page load (2 cannon bursts) ── */
-  (function () {
-    const COLORS = ['#ec4899','#f472b6','#c084fc','#fbbf24','#67e8f9','#a78bfa','#ffd6eb','#ff80b5','#fb7185'];
-    const canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+})();
 
-    const particles = [];
+/* ── Scroll Fuse & Rocket Launch ──────────────────────────────────── */
+(function fuseAndRockets() {
+  'use strict';
+  const NS = 'http://www.w3.org/2000/svg';
+  let launched = false;
+  let ticking  = false;
 
-    function burst(originX, originY) {
-      for (let i = 0; i < 120; i++) {
-        const angle  = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.1;
-        const speed  = 3.5 + Math.random() * 6;
-        const shape  = ['rect','circle','ribbon'][Math.floor(Math.random() * 3)];
-        particles.push({
-          x: originX, y: originY,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          shape, size: 10 + Math.random() * 14,
-          rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.18,
-          opacity: 1,
-          gravity: 0.12 + Math.random() * 0.08,
-        });
-      }
+  function mkPath(svg, d, stroke, width, dasharray) {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', d);
+    p.setAttribute('fill', 'none');
+    p.setAttribute('stroke', stroke);
+    p.setAttribute('stroke-width', width);
+    p.setAttribute('stroke-linecap', 'round');
+    if (dasharray) p.setAttribute('stroke-dasharray', dasharray);
+    svg.appendChild(p);
+    return p;
+  }
+
+  function buildD(pts) {
+    let d = `M ${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+    for (let i = 1; i < pts.length; i++) {
+      const [px, py] = pts[i - 1], [cx, cy] = pts[i];
+      const my = ((py + cy) / 2).toFixed(1);
+      d += ` C ${px.toFixed(1)},${my} ${cx.toFixed(1)},${my} ${cx.toFixed(1)},${cy.toFixed(1)}`;
     }
+    return d;
+  }
 
-    /* fire left cannon immediately, right cannon 350 ms later */
-    burst(canvas.width * 0.15, canvas.height * 0.82);
-    setTimeout(() => burst(canvas.width * 0.85, canvas.height * 0.82), 350);
-
-    let raf;
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function fireworks(vx, vy) {
+    const COLS = ['#ec4899','#f472b6','#c084fc','#fbbf24','#67e8f9','#a78bfa','#ff80b5','#fde68a'];
+    const cvs  = document.createElement('canvas');
+    cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+    document.body.appendChild(cvs);
+    cvs.width = window.innerWidth; cvs.height = window.innerHeight;
+    const ctx = cvs.getContext('2d');
+    const pts = Array.from({ length: 160 }, (_, i) => {
+      const a = (Math.PI * 2 * i) / 160 + (Math.random() - 0.5) * 0.4;
+      const s = 2.5 + Math.random() * 10;
+      return { x: vx, y: vy, vx: Math.cos(a)*s, vy: Math.sin(a)*s,
+               r: 3 + Math.random()*5, opacity: 1,
+               color: COLS[Math.floor(Math.random()*COLS.length)] };
+    });
+    (function draw() {
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
       let alive = 0;
-      for (const p of particles) {
-        p.x  += p.vx;
-        p.y  += p.vy;
-        p.vy += p.gravity;
-        p.vx *= 0.992;
-        p.rot += p.rotV;
-        p.opacity -= 0.005;
+      for (const p of pts) {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.14; p.vx *= 0.97; p.opacity -= 0.012;
         if (p.opacity <= 0) continue;
         alive++;
-        ctx.save();
-        ctx.globalAlpha = p.opacity;
-        ctx.fillStyle   = p.color;
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        if (p.shape === 'circle') {
-          ctx.beginPath();
-          ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (p.shape === 'ribbon') {
-          ctx.fillRect(-p.size / 2, -p.size / 5, p.size, p.size / 2.5);
-        } else {
-          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
-        }
+        ctx.save(); ctx.globalAlpha = p.opacity; ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color; ctx.shadowBlur = 8;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
       }
-      alive > 0 ? (raf = requestAnimationFrame(draw)) : canvas.remove();
-    }
-    draw();
-  }());
+      alive > 0 ? requestAnimationFrame(draw) : cvs.remove();
+    }());
+  }
 
-})();
+  function launch(rockets, flames) {
+    if (launched) return;
+    launched = true;
+    flames.forEach(f => { f.style.opacity = '0'; });
+    rockets.forEach(({ el, rx }, i) => {
+      let n = 0;
+      const id = setInterval(() => {
+        el.style.transform = `translateX(calc(-50% + ${(Math.random()-.5)*14}px))`;
+        if (++n >= 10) {
+          clearInterval(id);
+          el.style.transition = 'transform 1.5s cubic-bezier(0.2,0.9,0.3,1), opacity 0.5s 1s';
+          el.style.transform = `translateX(calc(-50% + ${i===0?-50:50}px)) translateY(-210vh)`;
+          el.style.opacity = '0';
+          setTimeout(() => fireworks(rx, window.innerHeight * 0.45), 1000 + i * 280);
+        }
+      }, 75);
+    });
+  }
+
+  function init() {
+    const docW = document.documentElement.scrollWidth;
+    const docH = document.documentElement.scrollHeight;
+
+    /* Waypoints: fuse weaves from top → bottom of page (x, y as fraction) */
+    const rawLeft  = [[.11,.02],[.37,.13],[.08,.26],[.39,.39],[.09,.52],[.38,.65],[.08,.78],[.13,.96]];
+    const rawRight = [[.89,.02],[.63,.13],[.92,.26],[.61,.39],[.91,.52],[.62,.65],[.92,.78],[.87,.96]];
+    const toAbs = pts => pts.map(([fx,fy]) => [fx * docW, fy * docH]);
+
+    const wpLeft  = toAbs(rawLeft);
+    const wpRight = toAbs(rawRight);
+
+    /* SVG overlay */
+    const svg = document.createElementNS(NS, 'svg');
+    svg.style.cssText = `position:absolute;top:0;left:0;width:${docW}px;height:${docH}px;pointer-events:none;z-index:2;overflow:visible;`;
+    document.body.style.position = 'relative';
+    document.body.appendChild(svg);
+
+    const fuseData = [wpLeft, wpRight].map(pts => {
+      const d = buildD(pts);
+      mkPath(svg, d, 'rgba(146,64,14,0.2)', '3', '10 7'); /* ghost: always visible, dim */
+      const rope = mkPath(svg, d, '#92400e', '4', null);
+      const glow = mkPath(svg, d, 'rgba(251,146,60,0.55)', '2', null);
+      return { rope, glow };
+    });
+
+    /* Flame emoji elements (fixed-position, follow burn point) */
+    const flames = fuseData.map(() => {
+      const el = document.createElement('div');
+      el.textContent = '🔥';
+      el.style.cssText = 'position:fixed;font-size:28px;line-height:1;pointer-events:none;z-index:9997;transform:translate(-50%,-60%);filter:drop-shadow(0 0 10px orange);transition:opacity .3s;';
+      document.body.appendChild(el);
+      return el;
+    });
+
+    /* Rockets at end of each fuse path */
+    const rocketEls = [wpLeft, wpRight].map((pts, i) => {
+      const [rx, ry] = pts.at(-1);
+      const el = document.createElement('div');
+      el.textContent = '🚀';
+      el.style.cssText = `position:absolute;left:${rx}px;top:${ry - 30}px;font-size:54px;line-height:1;pointer-events:none;z-index:3;transform:translateX(-50%);filter:drop-shadow(0 6px 18px rgba(0,0,0,.3));`;
+      document.body.appendChild(el);
+      return { el, rx: rx, ry: window.innerHeight * 0.45 };
+    });
+
+    /* Reference path elements for getTotalLength / getPointAtLength */
+    const pathEls = fuseData.map(f => f.rope);
+
+    function update() {
+      ticking = false;
+      if (launched) return;
+      const scrollY   = window.scrollY;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress  = Math.min(scrollY / maxScroll, 1);
+
+      pathEls.forEach((pathEl, i) => {
+        const total  = pathEl.getTotalLength();
+        const burned = progress * total;
+        const remain = Math.max(0, total - burned);
+
+        /* Show only unburned portion (from burn-point to rocket) */
+        const da = `0.001 ${burned.toFixed(1)} ${remain.toFixed(1)} ${(total + 10).toFixed(1)}`;
+        fuseData[i].rope.setAttribute('stroke-dasharray', da);
+        fuseData[i].glow.setAttribute('stroke-dasharray', da);
+
+        /* Position flame at the burn tip */
+        if (progress < 0.99 && burned < total - 15) {
+          const pt = pathEl.getPointAtLength(burned);
+          flames[i].style.left    = `${pt.x}px`;
+          flames[i].style.top     = `${pt.y - scrollY}px`;
+          flames[i].style.opacity = '1';
+        } else {
+          flames[i].style.opacity = '0';
+        }
+      });
+
+      if (progress >= 0.98) launch(rocketEls, flames);
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    update();
+  }
+
+  /* init after full layout so scrollHeight / dimensions are correct */
+  window.addEventListener('load', init);
+}());
