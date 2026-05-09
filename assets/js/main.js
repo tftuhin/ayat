@@ -21,7 +21,6 @@
 
   /* ── Gallery: 3D Coverflow ── */
   const chips = document.querySelectorAll('.chip');
-  const polaroids = document.querySelectorAll('.polaroid');
   const slides = document.querySelectorAll('.slide');
   const sliderDots = document.querySelectorAll('.slider-dot');
   const sliderCurrent = document.querySelector('.slider-current');
@@ -143,24 +142,7 @@
       chip.classList.add('is-active');
       const filter = chip.dataset.filter;
 
-      if (slides.length) {
-        applySlideFilter(filter);
-        return;
-      }
-
-      polaroids.forEach((p, i) => {
-        const cats = (p.dataset.categories || '').toLowerCase();
-        const match = filter === 'all' || cats.includes(filter);
-        if (match) {
-          p.classList.remove('is-hidden');
-          p.style.animation = 'none';
-          /* trigger reflow */
-          void p.offsetWidth;
-          p.style.animation = `polaroid-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s backwards`;
-        } else {
-          p.classList.add('is-hidden');
-        }
-      });
+      applySlideFilter(filter);
     });
   });
 
@@ -169,7 +151,7 @@
   }
 
   /* ── Reveal-on-scroll for cards ── */
-  const revealTargets = document.querySelectorAll('.about-card, .cert-card, .polaroid');
+  const revealTargets = document.querySelectorAll('.about-card, .cert-card');
 
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
