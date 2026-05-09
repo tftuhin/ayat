@@ -388,4 +388,74 @@
       if (e.key === 'ArrowRight') navigateModal(1);
     }
   });
+
+  /* ── Confetti pop on page load (2 cannon bursts) ── */
+  (function () {
+    const COLORS = ['#ec4899','#f472b6','#c084fc','#fbbf24','#67e8f9','#a78bfa','#ffd6eb','#ff80b5','#fb7185'];
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+
+    function burst(originX, originY) {
+      for (let i = 0; i < 90; i++) {
+        const angle  = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.1;
+        const speed  = 7 + Math.random() * 11;
+        const shape  = ['rect','circle','ribbon'][Math.floor(Math.random() * 3)];
+        particles.push({
+          x: originX, y: originY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          shape, size: 5 + Math.random() * 8,
+          rot: Math.random() * Math.PI * 2,
+          rotV: (Math.random() - 0.5) * 0.25,
+          opacity: 1,
+          gravity: 0.32 + Math.random() * 0.18,
+        });
+      }
+    }
+
+    /* fire left cannon immediately, right cannon 350 ms later */
+    burst(canvas.width * 0.15, canvas.height * 0.82);
+    setTimeout(() => burst(canvas.width * 0.85, canvas.height * 0.82), 350);
+
+    let raf;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = 0;
+      for (const p of particles) {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.vy += p.gravity;
+        p.vx *= 0.992;
+        p.rot += p.rotV;
+        p.opacity -= 0.011;
+        if (p.opacity <= 0) continue;
+        alive++;
+        ctx.save();
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle   = p.color;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        if (p.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (p.shape === 'ribbon') {
+          ctx.fillRect(-p.size / 2, -p.size / 5, p.size, p.size / 2.5);
+        } else {
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+        }
+        ctx.restore();
+      }
+      alive > 0 ? (raf = requestAnimationFrame(draw)) : canvas.remove();
+    }
+    draw();
+  }());
+
 })();
