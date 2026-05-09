@@ -331,7 +331,10 @@ section {
   margin-bottom: 0.2rem;
 }
 
-.name-wrap { display: inline-block; }
+.name-wrap {
+  display: inline-block;
+  white-space: nowrap;
+}
 .name-letter {
   display: inline-block;
   background: linear-gradient(180deg, var(--pink-500), var(--pink-700) 70%, var(--magenta));
@@ -1543,6 +1546,7 @@ section {
    ═══════════════════════════════════════════════════════════ */
 
 @media (max-width: 900px) {
+  .hero-title { font-size: clamp(2.2rem, 5vw, 4.5rem); }
   .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
   .hero-portrait { order: -1; max-width: 350px; margin: 0 auto; }
   .primary-nav { display: none; }
@@ -1583,6 +1587,7 @@ section {
   body { font-size: 16px; }
   .site-header { padding: 0.5rem 1rem; }
   .brand-mark { font-size: 1.1rem; }
+  .hero-title { font-size: clamp(1.8rem, 4.5vw, 3rem); }
   .hero-tagline { font-size: 1rem; }
   .hero-cta { flex-direction: column; align-items: flex-start; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
