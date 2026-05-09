@@ -219,7 +219,7 @@ body {
 main { position: relative; z-index: 1; }
 
 section {
-  padding: clamp(4rem, 10vw, 8rem) var(--gutter);
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter);
   max-width: var(--max);
   margin: 0 auto;
   position: relative;
@@ -227,7 +227,7 @@ section {
 
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
   position: relative;
 }
 
@@ -275,7 +275,7 @@ section {
 
 /* ═══ HERO ═══ */
 .hero {
-  padding-top: clamp(7rem, 14vw, 10rem);
+  padding-top: clamp(5rem, 10vw, 7rem);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
