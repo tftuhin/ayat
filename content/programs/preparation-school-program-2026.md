@@ -6,7 +6,7 @@ categories = ["dance"]
 event = "School Program Preparation"
 year = "2026"
 video = "/Video/Preparation for school program 2026.mp4"
-image = "/images/Pohela Boishakh event 2026 at School.png"
+image = "/images/Preparation for school program 2026.png"
 emoji = "💃"
 summary = "Behind-the-scenes preparation and rehearsal for an upcoming school program."
 +++

@@ -6,6 +6,7 @@ categories = ["dance"]
 event = "Milestone School & College"
 year = "2024"
 video = "/Video/Annual Dance Competition 2024.mp4"
+image = "/images/Annual Dance Competition 2024.png"
 emoji = "💃"
 summary = "Energetic dance performance in the Annual Dance Competition."
 +++
