@@ -19,6 +19,13 @@
     );
   }
 
+  /* ── Background clipart: random rotation & hover ── */
+  document.querySelectorAll('.clipart').forEach(clipart => {
+    const randomRotation = (Math.random() - 0.5) * 40 - 15;
+    clipart.style.setProperty('--base-rotate', `${randomRotation}deg`);
+    clipart.style.transform = `rotate(${randomRotation}deg)`;
+  });
+
   /* ── Gallery: 3D Coverflow ── */
   const chips = document.querySelectorAll('.chip');
   const slides = document.querySelectorAll('.slide');

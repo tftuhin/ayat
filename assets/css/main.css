@@ -943,6 +943,28 @@ section {
   border-radius: 5px;
 }
 
+/* ═══ BACKGROUND CLIPART ═══ */
+.clipart {
+  position: absolute;
+  pointer-events: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Smaller sizes with random positioning */
+.lollipop-1 { width: 45px;  top: 35%;  left: 2%;   transform: rotate(-12deg); }
+.lollipop-2 { width: 38px;  bottom: 22%; right: 3%; transform: rotate(15deg); }
+.cotton-candy-1 { width: 50px;  top: 18%; right: 2%; transform: rotate(-8deg); }
+.cotton-candy-2 { width: 42px;  bottom: 28%; left: 2%; transform: rotate(22deg); }
+.magic-wand-1 { width: 40px;  top: 8%;   left: 3%; transform: rotate(-18deg); }
+.magic-wand-2 { width: 36px;  bottom: 10%; right: 2%; transform: rotate(12deg); }
+
+/* Mouse hover interaction */
+.clipart:hover {
+  transform: scale(1.15) rotateZ(5deg) !important;
+  filter: drop-shadow(0 8px 16px rgba(236, 72, 153, 0.4));
+  z-index: 5;
+}
+
 /* ═══ CERTIFICATES ═══ */
 .trophy-shelf {
   display: grid;
