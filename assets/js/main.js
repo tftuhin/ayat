@@ -402,20 +402,20 @@
     const particles = [];
 
     function burst(originX, originY) {
-      for (let i = 0; i < 90; i++) {
+      for (let i = 0; i < 120; i++) {
         const angle  = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.1;
-        const speed  = 7 + Math.random() * 11;
+        const speed  = 3.5 + Math.random() * 6;
         const shape  = ['rect','circle','ribbon'][Math.floor(Math.random() * 3)];
         particles.push({
           x: originX, y: originY,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
-          shape, size: 5 + Math.random() * 8,
+          shape, size: 10 + Math.random() * 14,
           rot: Math.random() * Math.PI * 2,
-          rotV: (Math.random() - 0.5) * 0.25,
+          rotV: (Math.random() - 0.5) * 0.18,
           opacity: 1,
-          gravity: 0.32 + Math.random() * 0.18,
+          gravity: 0.12 + Math.random() * 0.08,
         });
       }
     }
@@ -434,7 +434,7 @@
         p.vy += p.gravity;
         p.vx *= 0.992;
         p.rot += p.rotV;
-        p.opacity -= 0.011;
+        p.opacity -= 0.005;
         if (p.opacity <= 0) continue;
         alive++;
         ctx.save();
