@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Certificates on Tahrin Jahan Ayat — Child Artist Portfolio</title>
+    <link>//localhost:1313/certificates/</link>
+    <description>Recent content in Certificates on Tahrin Jahan Ayat — Child Artist Portfolio</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="//localhost:1313/certificates/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Best Performer</title>
+      <link>//localhost:1313/certificates/best-performer-2025/</link>
+      <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/best-performer-2025/</guid>
+      <description>Recognized as the Best Performer for outstanding discipline and speaking skills in the K.G. class.</description>
+    </item>
+    <item>
+      <title>Annual Dance Competition</title>
+      <link>//localhost:1313/certificates/annual-dance-competition-2024/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/annual-dance-competition-2024/</guid>
+      <description>Awarded 1st place for performance in the Annual Dance Competition for the Nursery class.</description>
+    </item>
+    <item>
+      <title>Best All Rounder</title>
+      <link>//localhost:1313/certificates/best-all-rounder-2024/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/best-all-rounder-2024/</guid>
+      <description>Recognized as the Best All Rounder in the Nursery class.</description>
+    </item>
+    <item>
+      <title>Poem Recitation</title>
+      <link>//localhost:1313/certificates/poem-recitation-2024/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/poem-recitation-2024/</guid>
+      <description>Awarded 1st place for poem recitation in the Nursery class.</description>
+    </item>
+    <item>
+      <title>Annual Cultural Programme</title>
+      <link>//localhost:1313/certificates/annual-cultural-programme/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/annual-cultural-programme/</guid>
+      <description>Recognized for rhyme performance in the Annual Cultural Programme for the Play Group.</description>
+    </item>
+    <item>
+      <title>Best Discipline</title>
+      <link>//localhost:1313/certificates/best-discipline-2023/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/best-discipline-2023/</guid>
+      <description>Awarded for Best Discipline in the PG class.</description>
+    </item>
+    <item>
+      <title>Dance Competition</title>
+      <link>//localhost:1313/certificates/dance-competition/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/certificates/dance-competition/</guid>
+      <description>Awarded 1st Prize for performance in the Dance Competition for the Play class.</description>
+    </item>
+  </channel>
+</rss>
