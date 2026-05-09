@@ -1418,12 +1418,14 @@ section {
   z-index: 10;
   background: white;
   border-radius: 16px;
-  max-width: 90vw;
-  max-height: 90vh;
-  width: 100%;
-  overflow: auto;
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 20px 60px rgba(190, 24, 93, 0.3);
   animation: modal-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
 }
 
 @keyframes modal-pop {
@@ -1470,13 +1472,15 @@ section {
 .modal-video {
   width: 100%;
   height: auto;
-  max-height: 60vh;
-  object-fit: cover;
+  max-width: 95vw;
+  max-height: 75vh;
+  object-fit: contain;
   display: block;
 }
 
 .modal-video {
   background: #000;
+  aspect-ratio: 16 / 9;
 }
 
 .modal-info {
