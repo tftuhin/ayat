@@ -266,6 +266,8 @@
   const modal = document.getElementById('media-modal');
   const modalBackdrop = document.querySelector('.modal-backdrop');
   const modalClose = document.querySelector('.modal-close');
+  const modalArrowPrev = document.querySelector('.modal-arrow-prev');
+  const modalArrowNext = document.querySelector('.modal-arrow-next');
   const modalImage = document.getElementById('modal-image');
   const modalVideo = document.getElementById('modal-video');
   const modalInfo = document.getElementById('modal-info');
@@ -273,7 +275,15 @@
   const modalEvent = document.getElementById('modal-event');
   const modalSummary = document.getElementById('modal-summary');
 
-  const openModal = (data) => {
+  let currentItems = [];
+  let currentIndex = 0;
+  let currentType = null; // 'slide' or 'cert'
+
+  const openModal = (data, items = [], index = 0, type = null) => {
+    currentItems = items;
+    currentIndex = index;
+    currentType = type;
+
     modalImage.style.display = 'none';
     modalVideo.style.display = 'none';
     if (data.image) {
@@ -287,6 +297,16 @@
     modalTitle.textContent = data.title;
     modalEvent.textContent = data.event || '';
     modalSummary.textContent = data.summary || '';
+
+    // Show/hide navigation arrows
+    if (items.length > 1) {
+      modalArrowPrev.style.display = 'flex';
+      modalArrowNext.style.display = 'flex';
+    } else {
+      modalArrowPrev.style.display = 'none';
+      modalArrowNext.style.display = 'none';
+    }
+
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -297,7 +317,44 @@
     if (modalVideo) modalVideo.pause();
   };
 
-  document.querySelectorAll('.cert-card').forEach(card => {
+  const navigateModal = (direction) => {
+    if (!currentItems.length) return;
+    currentIndex = (currentIndex + direction + currentItems.length) % currentItems.length;
+    const item = currentItems[currentIndex];
+    openModal(item, currentItems, currentIndex, currentType);
+  };
+
+  // Gallery slides
+  const allSlides = document.querySelectorAll('.slide');
+  const visibleSlides = () => Array.from(allSlides).filter(s => s.style.display !== 'none');
+
+  allSlides.forEach(slide => {
+    slide.addEventListener('click', (e) => {
+      if (slide.classList.contains('pos-center')) {
+        e.stopPropagation();
+        const visible = visibleSlides();
+        const index = visible.indexOf(slide);
+        const data = {
+          title: slide.dataset.title,
+          event: slide.dataset.event,
+          summary: slide.dataset.summary,
+          image: slide.querySelector('.slide-img')?.src,
+          video: slide.querySelector('.slide-video')?.src
+        };
+        const items = visible.map(s => ({
+          title: s.dataset.title,
+          event: s.dataset.event,
+          summary: s.dataset.summary,
+          image: s.querySelector('.slide-img')?.src,
+          video: s.querySelector('.slide-video')?.src
+        }));
+        openModal(data, items, index, 'slide');
+      }
+    });
+  });
+
+  // Certificate cards
+  document.querySelectorAll('.cert-card').forEach((card, cardIndex) => {
     card.style.cursor = 'pointer';
     card.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -311,15 +368,35 @@
         summary: desc || '',
         image: img?.src
       };
-      openModal(data);
+      const items = Array.from(document.querySelectorAll('.cert-card')).map(c => ({
+        title: c.querySelector('h3')?.textContent || 'Award',
+        event: c.querySelector('.cert-meta')?.textContent || '',
+        summary: c.querySelector('.cert-desc')?.textContent || '',
+        image: c.querySelector('img')?.src
+      }));
+      openModal(data, items, cardIndex, 'cert');
     });
   });
 
+  // Navigation arrows
+  modalArrowPrev?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navigateModal(-1);
+  });
+
+  modalArrowNext?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navigateModal(1);
+  });
+
+  // Close modal
   modalClose?.addEventListener('click', closeModal);
   modalBackdrop?.addEventListener('click', closeModal);
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-      closeModal();
+    if (modal.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') navigateModal(-1);
+      if (e.key === 'ArrowRight') navigateModal(1);
     }
   });
 })();
