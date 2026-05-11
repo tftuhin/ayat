@@ -25,15 +25,6 @@ export default function Gallery() {
     return "hidden";
   };
 
-  const positionClasses = {
-    center: "translate-x-0 rotateY(0) scale-100 opacity-100",
-    next: "translate-x-52 -rotateY-25 scale-85 opacity-80",
-    "far-next": "translate-x-96 -rotateY-35 scale-70 opacity-40",
-    prev: "-translate-x-52 rotateY-25 scale-85 opacity-80",
-    "far-prev": "-translate-x-96 rotateY-35 scale-70 opacity-40",
-    hidden: "opacity-0",
-  };
-
   return (
     <section id="gallery" className="py-20 relative">
       <div className="max-w-6xl mx-auto px-7">
