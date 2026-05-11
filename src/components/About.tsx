@@ -29,20 +29,22 @@ const skills = [
 
 export default function About() {
   return (
-    <section id="about" className="py-20 relative">
-      <div className="max-w-6xl mx-auto px-7">
-        <div className="mb-16 reveal">
-          <div className="text-sm font-bold uppercase tracking-widest text-peach-deep mb-2">About me</div>
-          <h2 className="font-display text-5xl md:text-6xl font-normal leading-tight">
-            A little storyteller<br />with big <span className="text-peach-deep">dreams ✨</span>
-          </h2>
+    <section id="about" className="section relative">
+      <div className="shell">
+        <div className="section-head reveal">
+          <div>
+            <div className="eyebrow">About me</div>
+            <h2>
+              A little storyteller<br />with big <span className="text-peach-deep">dreams ✨</span>
+            </h2>
+          </div>
         </div>
 
         <p className="text-lg text-ink-soft mb-12 max-w-lg leading-relaxed reveal delay-1">
           Four skills woven into every performance — recitation, dance, storytelling and the bright stage presence that ties them together.
         </p>
 
-        <div className="grid gap-5 mb-16" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
+        <div className="skills-grid mb-16">
           {skills.map((skill, idx) => (
             <div
               key={skill.title}

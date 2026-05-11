@@ -26,13 +26,15 @@ export default function Gallery() {
   };
 
   return (
-    <section id="gallery" className="py-20 relative">
-      <div className="max-w-6xl mx-auto px-7">
-        <div className="mb-16 reveal">
-          <div className="text-sm font-bold uppercase tracking-widest text-peach-deep mb-2">My performances</div>
-          <h2 className="font-display text-5xl md:text-6xl font-normal leading-tight">
-            The <span className="text-peach-deep">stage</span> album
-          </h2>
+    <section id="gallery" className="section relative">
+      <div className="shell">
+        <div className="section-head reveal">
+          <div>
+            <div className="eyebrow">My performances</div>
+            <h2>
+              The <span className="text-peach-deep">stage</span> album
+            </h2>
+          </div>
         </div>
 
         <p className="text-lg text-ink-soft mb-12 max-w-lg leading-relaxed reveal delay-1">
@@ -41,7 +43,7 @@ export default function Gallery() {
 
         {/* Slider */}
         <div className="relative mb-12">
-          <div className="relative h-80 md:h-96 perspective overflow-hidden">
+          <div className="coverflow-stage">
             <div className="absolute inset-0 flex items-center justify-center">
               {slides.map((prog, idx) => {
                 const position = getPosition(idx);

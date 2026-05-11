@@ -2,9 +2,9 @@
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 relative">
-      <div className="max-w-6xl mx-auto px-7">
-        <div className="max-w-md mx-auto text-center glass-strong p-12 rounded-3xl reveal">
+    <section id="contact" className="section relative">
+      <div className="shell">
+        <div className="contact-card glass-strong max-w-md mx-auto reveal">
           <h2 className="font-display text-4xl font-semibold mb-4 leading-tight">
             Let's create<br />magic together ✨
           </h2>

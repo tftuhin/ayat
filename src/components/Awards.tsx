@@ -11,25 +11,27 @@ export default function Awards() {
   };
 
   return (
-    <section id="awards" className="py-20 relative">
-      <div className="max-w-6xl mx-auto px-7">
-        <div className="mb-16 reveal">
-          <div className="text-sm font-bold uppercase tracking-widest text-peach-deep mb-2">Awards & recognition</div>
-          <h2 className="font-display text-5xl md:text-6xl font-normal leading-tight">
-            My <span className="text-peach-deep">trophy</span> wall
-          </h2>
+    <section id="awards" className="section relative">
+      <div className="shell">
+        <div className="section-head reveal">
+          <div>
+            <div className="eyebrow">Awards & recognition</div>
+            <h2>
+              My <span className="text-peach-deep">trophy</span> wall
+            </h2>
+          </div>
         </div>
 
         <p className="text-lg text-ink-soft mb-12 max-w-lg leading-relaxed reveal delay-1">
           Certificates from cultural programs, competitions & national celebrations
         </p>
 
-        <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
+        <div className="skills-grid">
           {awards.map((award, idx) => (
             <div
               key={award.title}
               onClick={() => toggle(idx)}
-              className={`relative w-full h-80 cursor-pointer reveal delay-${Math.min(idx + 1, 4)} transition-transform duration-600 transform-gpu`}
+              className={`award-card-wrap cursor-pointer reveal delay-${Math.min(idx + 1, 4)} transition-transform duration-600 transform-gpu`}
               style={{
                 perspective: "1000px",
               }}
