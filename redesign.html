@@ -1,0 +1,1120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tahrin Jahan Ayat — Child Artist Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ============ Ayat Portfolio Redesign — Core Styles ============ */
+    :root {
+      --bg: #fbf6ef;
+      --bg-warm: #f5ede6;
+      --bg-cool: #f2ede8;
+      --ink: #3a2a1f;
+      --ink-soft: #6b5644;
+      --ink-mute: #95877a;
+      --peach: #d4a373;
+      --peach-deep: #a67352;
+      --lavender: #c9c5e0;
+      --lavender-deep: #8b7ca6;
+      --sage: #c1d4a8;
+      --gold: #d4b376;
+      --rose: #d45f7f;
+      --sky: #a8d5f7;
+      --line: #e5dfd5;
+      --glass-bg: rgba(255, 250, 245, 0.55);
+      --glass-bg-strong: rgba(255, 250, 245, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.7);
+      --shadow-soft: 0 14px 40px -18px rgba(100, 80, 60, 0.25);
+      --shadow-lift: 0 30px 60px -28px rgba(100, 80, 60, 0.35);
+      --font-display: "Caprasimo", Georgia, serif;
+      --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+      --font-hand: "Caveat", cursive;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* Dappled background */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(60% 50% at 15% 10%, rgba(212, 163, 115, 0.35) 0%, transparent 60%),
+        radial-gradient(50% 60% at 85% 20%, rgba(201, 197, 224, 0.25) 0%, transparent 65%),
+        radial-gradient(70% 55% at 70% 90%, rgba(193, 212, 168, 0.25) 0%, transparent 60%),
+        radial-gradient(50% 40% at 20% 80%, rgba(212, 179, 118, 0.2) 0%, transparent 65%),
+        var(--bg);
+    }
+
+    .bg-grain {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.25;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* Glass effect */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        inset 0 -1px 0 rgba(255,255,255,0.2),
+        var(--shadow-soft);
+      border-radius: 28px;
+    }
+
+    .glass-strong {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.7),
+        var(--shadow-lift);
+      border-radius: 32px;
+    }
+
+    /* Layout */
+    .shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* Typography */
+    .display {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.02;
+    }
+
+    .hand {
+      font-family: var(--font-hand);
+      font-weight: 500;
+    }
+
+    .eyebrow {
+      font-family: var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--peach-deep);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.25s cubic-bezier(.2,.9,.3,1.4), box-shadow 0.25s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
+      color: white;
+      box-shadow: 0 12px 28px -10px rgba(166, 115, 82, 0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 18px 38px -10px rgba(166, 115, 82, 0.65);
+    }
+
+    .btn-ghost {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(14px);
+      color: var(--ink);
+      border: 1px solid var(--glass-border);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 80;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255, 250, 245, 0.75);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 14px 40px -18px rgba(100, 80, 60, 0.3);
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px 8px 12px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 999px;
+    }
+
+    .nav-brand .sparkle {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--peach), var(--gold));
+      color: white;
+      font-size: 12px;
+    }
+
+    .nav a.nav-link {
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav a.nav-link:hover {
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--ink);
+    }
+
+    /* Animations */
+    @keyframes float-y {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-22px) rotate(8deg); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+
+    @keyframes spin-slow {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes blob-morph {
+      0%, 100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+      50% { border-radius: 40% 60% 45% 55% / 60% 45% 55% 40%; }
+    }
+
+    @keyframes count-up {
+      from { transform: translateY(1em); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(.2,.7,.3,1), transform 0.9s cubic-bezier(.2,.7,.3,1);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal.delay-1 { transition-delay: 0.1s; }
+    .reveal.delay-2 { transition-delay: 0.2s; }
+    .reveal.delay-3 { transition-delay: 0.3s; }
+    .reveal.delay-4 { transition-delay: 0.4s; }
+
+    /* Section */
+    .section {
+      padding: 70px 0;
+      position: relative;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5.5vw, 68px);
+      margin: 8px 0 0;
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    .section-head .lede {
+      max-width: 380px;
+      color: var(--ink-soft);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    /* Chip */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(54px, 7.2vw, 104px);
+      margin: 0;
+      line-height: 0.98;
+    }
+
+    .hero-text > p {
+      margin-top: 28px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 520px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .hero-stats {
+      margin-top: 56px;
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--peach-deep);
+      line-height: 1;
+      height: 1.2em;
+      overflow: hidden;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-portrait {
+      position: relative;
+      aspect-ratio: 0.9;
+      max-width: 560px;
+      justify-self: end;
+      width: 100%;
+    }
+
+    .portrait-blob {
+      position: absolute;
+      inset: -28px;
+      border-radius: 44% 56% 48% 52% / 52% 44% 56% 48%;
+      background: linear-gradient(135deg, rgba(212, 163, 115, 0.5), rgba(201, 197, 224, 0.5));
+      animation: blob-morph 12s ease-in-out infinite;
+      filter: blur(8px);
+    }
+
+    .portrait-frame {
+      glass-strong;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 44% 56% 48% 52% / 52% 44% 56% 48%;
+      overflow: hidden;
+      animation: blob-morph 12s ease-in-out infinite;
+    }
+
+    .portrait-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .portrait-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(212, 163, 115, 0.3) 0%, rgba(201, 197, 224, 0.3) 50%, rgba(193, 212, 168, 0.3) 100%);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      font-family: ui-monospace, monospace;
+      color: var(--ink-mute);
+      text-align: center;
+    }
+
+    /* Gallery Slider */
+    .gallery-section {
+      position: relative;
+    }
+
+    .gallery-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .coverflow-stage {
+      position: relative;
+      height: 560px;
+      perspective: 1200px;
+      margin: 0 -40px;
+      padding: 0 40px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      width: 340px;
+      height: 480px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateX(0) rotateY(0) scale(1);
+      opacity: 1;
+      transition: all 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .slide.pos-far-prev {
+      transform: translate(-50%, -50%) translateX(-420px) rotateY(35deg) scale(0.7);
+      opacity: 0.4;
+    }
+
+    .slide.pos-prev {
+      transform: translate(-50%, -50%) translateX(-210px) rotateY(25deg) scale(0.85);
+      opacity: 0.8;
+    }
+
+    .slide.pos-next {
+      transform: translate(-50%, -50%) translateX(210px) rotateY(-25deg) scale(0.85);
+      opacity: 0.8;
+    }
+
+    .slide.pos-far-next {
+      transform: translate(-50%, -50%) translateX(420px) rotateY(-35deg) scale(0.7);
+      opacity: 0.4;
+    }
+
+    .slide-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      class: "glass-strong";
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-lift);
+    }
+
+    .slide-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slide-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(212, 163, 115, 0.2) 0%, rgba(201, 197, 224, 0.2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+
+    .slide-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+      padding: 40px 20px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .slide-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    .slide-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.2s;
+    }
+
+    .slide-btn:hover {
+      transform: scale(1.1);
+      background: white;
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ink-soft);
+      opacity: 0.4;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .dot.active {
+      opacity: 1;
+      background: var(--peach-deep);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* Awards */
+    .awards-section {
+      position: relative;
+    }
+
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .award-card {
+      position: relative;
+      height: 340px;
+      border-radius: 24px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+    }
+
+    .award-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .award-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .award-front {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(28px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-lift);
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .award-front-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .award-front-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(212, 163, 115, 0.2) 0%, rgba(201, 197, 224, 0.2) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .award-back {
+      background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
+      color: white;
+      transform: rotateY(180deg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .award-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .award-meta {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .award-desc {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* Contact */
+    .contact-section {
+      position: relative;
+    }
+
+    .contact-card {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 48px 40px;
+      border-radius: 32px;
+      text-align: center;
+      glass-strong;
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(28px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-lift);
+    }
+
+    .contact-card h2 {
+      font-family: var(--font-display);
+      font-size: 48px;
+      margin: 0 0 16px;
+      line-height: 1.1;
+    }
+
+    .contact-card p {
+      font-size: 16px;
+      color: var(--ink-soft);
+      margin: 0 0 32px;
+      line-height: 1.6;
+    }
+
+    .contact-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      background: var(--peach);
+      color: white;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .contact-email:hover {
+      transform: scale(1.05);
+      background: var(--peach-deep);
+    }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      .shell { padding: 0 18px; }
+      .section { padding: 48px 0; }
+      .nav { top: 12px; padding: 6px; gap: 2px; max-width: calc(100vw - 24px); overflow-x: auto; }
+      .nav-brand { padding: 6px 10px 6px 8px; font-size: 15px; }
+      .nav a.nav-link { padding: 8px 10px !important; font-size: 12px; white-space: nowrap; }
+      #hero { padding: 100px 0 40px !important; }
+      .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .section-head { gap: 14px; margin-bottom: 28px; }
+      .section-head h2 { font-size: 36px !important; }
+      .coverflow-stage { height: 440px !important; margin: 0; padding: 0; }
+      .slide { width: 280px; height: 400px; }
+      .awards-grid { gap: 16px; }
+      .award-card { height: 280px; }
+      .contact-card { padding: 40px 24px !important; }
+    }
+
+    html { scroll-behavior: smooth; }
+    ::selection { background: var(--peach); color: white; }
+  </style>
+</head>
+<body>
+  <div class="bg-canvas"></div>
+  <div class="bg-grain"></div>
+
+  <!-- Navigation -->
+  <div class="nav">
+    <a href="#hero" class="nav-brand">
+      <span class="sparkle">✨</span>
+      <span>Ayat</span>
+    </a>
+    <a href="#gallery" class="nav-link">Gallery</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#awards" class="nav-link">Awards</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="shell">
+      <div class="hero-grid">
+        <!-- Left content -->
+        <div>
+          <div class="reveal glass" style="display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px; margin-bottom: 26px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--peach-deep); box-shadow: 0 0 0 4px rgba(166, 115, 82, 0.3); animation: twinkle 2s ease-in-out infinite;"></span>
+            <span style="font-size: 13px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.02em;">Class One · Age 6 · On stage since 4</span>
+          </div>
+
+          <h1 class="display hero-title reveal delay-1" style="margin: 0;">
+            Hi, I'm<br>
+            <span style="color: var(--peach-deep);">Tahrin</span>
+            <span style="color: var(--ink);">Ayat</span><br>
+            <span class="hand" style="font-size: 0.55em; color: var(--lavender-deep); display: inline-block; transform: rotate(-2deg); margin-top: 8px;">and I love the stage ♡</span>
+          </h1>
+
+          <p class="reveal delay-2">A bright, expressive young performer with a captivating voice and vivid imagination — bringing Bengali poetry, traditional fables, and joyful dance to every stage I step on.</p>
+
+          <div class="hero-tags reveal delay-3">
+            <span class="chip" style="background: linear-gradient(135deg, var(--peach), rgba(255,255,255,0.6)); color: var(--ink); border: 1px solid rgba(255,255,255,0.7);">
+              <span style="font-size: 14px;">🎤</span> Recitation
+            </span>
+            <span class="chip" style="background: linear-gradient(135deg, var(--lavender), rgba(255,255,255,0.6)); color: var(--ink); border: 1px solid rgba(255,255,255,0.7);">
+              <span style="font-size: 14px;">📖</span> Storytelling
+            </span>
+            <span class="chip" style="background: linear-gradient(135deg, var(--rose), rgba(255,255,255,0.6)); color: var(--ink); border: 1px solid rgba(255,255,255,0.7);">
+              <span style="font-size: 14px;">💃</span> Dance
+            </span>
+            <span class="chip" style="background: linear-gradient(135deg, var(--gold), rgba(255,255,255,0.6)); color: var(--ink); border: 1px solid rgba(255,255,255,0.7);">
+              <span style="font-size: 14px;">🎭</span> Stage
+            </span>
+          </div>
+
+          <div class="hero-cta reveal delay-4">
+            <a href="#gallery" class="btn btn-primary">See my performances →</a>
+            <a href="#awards" class="btn btn-ghost">View awards</a>
+          </div>
+
+          <div class="hero-stats reveal delay-4">
+            <div class="stat">
+              <div class="stat-value"><span>3</span><span style="font-size: 0.5em;">+</span></div>
+              <div class="stat-label">Years performing</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value"><span>2</span></div>
+              <div class="stat-label">Languages spoken</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value"><span id="cert-count">12</span></div>
+              <div class="stat-label">Awards &amp; certificates</div>
+            </div>
+          </div>
+
+          <!-- Scroll cue -->
+          <div class="reveal delay-4" style="display: flex; justify-content: center; margin-top: 80px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink-mute); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600;">
+              scroll to explore
+              <div style="width: 1px; height: 36px; background: linear-gradient(to bottom, var(--ink-mute), transparent); animation: float-y 2.6s ease-in-out infinite;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: portrait -->
+        <div class="reveal delay-2" style="position: relative; aspect-ratio: 0.9; max-width: 560px; justify-self: end; width: 100%;">
+          <div class="portrait-blob"></div>
+          <div class="portrait-frame glass-strong">
+            <img src="/images/ayat-hero.png" alt="Ayat in traditional dance costume" class="portrait-img">
+          </div>
+          <span style="position: absolute; top: -4%; right: 20%; font-size: 30px; color: var(--gold); animation: spin-slow 14s linear infinite; filter: drop-shadow(0 4px 12px rgba(212, 179, 118, 0.5));">✦</span>
+          <span style="position: absolute; bottom: -2%; right: 18%; font-size: 24px; color: var(--rose); animation: twinkle 3s ease-in-out infinite;">♡</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="section gallery-section">
+    <div class="shell">
+      <div class="gallery-header">
+        <div class="reveal">
+          <div class="eyebrow">My performances</div>
+          <h2 class="display">The <span style="color: var(--peach-deep);">stage</span> album</h2>
+        </div>
+        <p class="lede reveal delay-1">A scrapbook of cultural programs, rehearsals, and standout moments</p>
+      </div>
+
+      <div class="coverflow-stage">
+        <div class="slider-container" id="slider">
+          <!-- Slides will be generated by JavaScript -->
+        </div>
+        <div style="position: absolute; bottom: 20px; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+          <button class="slide-btn" id="prev-btn" style="margin-left: 20px;">←</button>
+          <div class="slider-dots" id="dots"></div>
+          <button class="slide-btn" id="next-btn" style="margin-right: 20px;">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div class="reveal">
+          <div class="eyebrow">About me</div>
+          <h2 class="display">A little storyteller<br>with big <span style="color: var(--peach-deep);">dreams ✨</span></h2>
+        </div>
+        <p class="lede reveal delay-1">Four skills woven into every performance — recitation, dance, storytelling and the bright stage presence that ties them together.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="glass reveal delay-1" style="padding: 28px; position: relative; overflow: hidden;">
+          <div style="width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; background: linear-gradient(135deg, var(--peach), rgba(255,255,255,0.6)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); margin-bottom: 22px;">🎤</div>
+          <h3 class="display" style="font-size: 26px; margin: 0 0 10px;">Poem Recitation</h3>
+          <p style="margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Excellent memorization with natural rhythm, voice modulation, and expressive facial gestures that bring every verse to life.</p>
+        </div>
+
+        <div class="glass reveal delay-2" style="padding: 28px; position: relative; overflow: hidden;">
+          <div style="width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; background: linear-gradient(135deg, var(--rose), rgba(255,255,255,0.6)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); margin-bottom: 22px;">💃</div>
+          <h3 class="display" style="font-size: 26px; margin: 0 0 10px;">Dance</h3>
+          <p style="margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Energetic and graceful — comfortable learning choreography and executing stage routines for cultural events.</p>
+        </div>
+
+        <div class="glass reveal delay-3" style="padding: 28px; position: relative; overflow: hidden;">
+          <div style="width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; background: linear-gradient(135deg, var(--lavender), rgba(255,255,255,0.6)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); margin-bottom: 22px;">📖</div>
+          <h3 class="display" style="font-size: 26px; margin: 0 0 10px;">Storytelling</h3>
+          <p style="margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Engaging delivery style. Skilled at narrating traditional Bengali fables and fun children's stories.</p>
+        </div>
+
+        <div class="glass reveal delay-4" style="padding: 28px; position: relative; overflow: hidden;">
+          <div style="width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; background: linear-gradient(135deg, var(--gold), rgba(255,255,255,0.6)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); margin-bottom: 22px;">🎭</div>
+          <h3 class="display" style="font-size: 26px; margin: 0 0 10px;">Stage &amp; Camera</h3>
+          <p style="margin: 0; color: var(--ink-soft); font-size: 15px; line-height: 1.6;">Naturally charismatic, unafraid of large audiences, and comfortable taking direction from teachers and directors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards Section -->
+  <section id="awards" class="section awards-section">
+    <div class="shell">
+      <div class="gallery-header">
+        <div class="reveal">
+          <div class="eyebrow">Awards &amp; recognition</div>
+          <h2 class="display">My <span style="color: var(--peach-deep);">trophy</span> wall</h2>
+        </div>
+        <p class="lede reveal delay-1">Certificates from cultural programs, competitions &amp; national celebrations</p>
+      </div>
+
+      <div class="awards-grid" id="awards-grid">
+        <!-- Awards will be generated by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section contact-section">
+    <div class="shell">
+      <div class="contact-card reveal">
+        <h2 style="margin: 0 0 16px;">Let's create<br>magic together ✨</h2>
+        <p>For any questions, collaborations, or just to say hi — reach out anytime!</p>
+        <a href="mailto:tuhin59083@gmail.com" class="contact-email">✉ tuhin59083@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Reveal on scroll
+    function observeReveal() {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(el => {
+          if (el.isIntersecting) {
+            el.target.classList.add('in');
+            obs.unobserve(el.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    }
+
+    // Gallery slider
+    const programs = [
+      { title: 'Preparation for school program 2026', event: 'School Program Preparation · 2026', year: '2026', type: 'video', src: '/Video/Preparation%20for%20school%20program%202026.mp4', poster: '/images/Preparation%20for%20school%20program%202026.png' },
+      { title: 'Pahela Boishakh 2026 event at Muktijuddho Jadughor', event: 'Muktijuddho Jadughor · 2026', year: '2026', type: 'image', src: '/images/Pahela%20Boishakh%202026%20event%20at%20Muktijuddho%20Jadughor.png' },
+      { title: 'Poem Recitation in Pohela Boishakh 2026', event: 'Bengali New Year Celebration · 2026', year: '2026', type: 'video', src: '/Video/Poem%20Recitation%20in%20Pohela%20Boishakh%202026.mp4', poster: '/images/Poem%20Recitation%20in%20Pohela%20Boishakh%202026.png' },
+      { title: 'Pohela Boishakh event 2026 at School', event: 'Milestone School & College · 2026', year: '2026', type: 'image', src: '/images/Pohela%20Boishakh%20event%202026%20at%20School.png' },
+      { title: 'Receiving award for Robindro Utsob 2025', event: 'Robindro Utsob Award Ceremony · 2025', year: '2025', type: 'image', src: '/images/Receiving%20award%20for%20Robindro%20Utsob%202025.png' },
+      { title: 'Robindro Utsob 2025', event: 'Rabindranath Tagore Birthday Celebration · 2025', year: '2025', type: 'image', src: '/images/Robindro%20Utsob%202025.png' },
+      { title: 'Ayat\'s Birthday Party 2025', event: 'Birthday Celebration at School · 2025', year: '2025', type: 'image', src: '/images/Ayat%27s%20Birthday%20Party%202025.png' },
+      { title: 'With her teacher on her Birthday Party at School 2025', event: 'Birthday Celebration · 2025', year: '2025', type: 'image', src: '/images/With%20her%20teacher%20on%20her%20Birthday%20Party%20at%20School%202025.png' },
+      { title: 'Poem Recitation 21 Feb 2025', event: 'Mother Language Day · 2025', year: '2025', type: 'video', src: '/Video/Poem%20Recitation%2021%20Feb%202025.mp4', poster: '/images/Poem%20Recitation%2021%20Feb%202025.png' },
+      { title: 'Receiving All rounder award 2024', event: 'Award Ceremony · 2024', year: '2024', type: 'image', src: '/images/Receiving%20All%20rounder%20award%202024.png' },
+      { title: 'Ayat with her good habits craft', event: 'School Activity', year: '2024', type: 'image', src: '/images/Ayat%20with%20her%20good%20habits%20craft.png' },
+      { title: 'I love cycling', event: 'Fun Activity', year: '2024', type: 'image', src: '/images/I%20love%20cycling.png' },
+      { title: 'Summer Camp 2024', event: 'Summer Activities · 2024', year: '2024', type: 'image', src: '/images/Summer%20Camp%202024.png' },
+      { title: 'Annual Dance Competition 2024', event: 'Milestone School & College · 2024', year: '2024', type: 'video', src: '/Video/Annual%20Dance%20Competition%202024.mp4', poster: '/images/Annual%20Dance%20Competition%202024.png' },
+      { title: '21 February 2024', event: 'Mother Language Day · 2024', year: '2024', type: 'image', src: '/images/21%20February%202024.png' },
+      { title: 'Receiving award for 21 February 2024 Drawing competition', event: 'Mother Language Day Award · 2024', year: '2024', type: 'image', src: '/images/Receiving%20award%20for%2021%20February%202024%20Drawing%20competition.png' },
+      { title: 'Music Competition 2023', event: 'Milestone School & College · 2023', year: '2023', type: 'image', src: '/images/Music%20Competition%202023.png' },
+      { title: 'Poem Recitation in Robindro Utsob 2023', event: 'Rabindranath Tagore Birthday Celebration · 2023', year: '2023', type: 'video', src: '/Video/Poem%20Recitation%20in%20Robindro%20Utsob%202023.mp4', poster: '/images/Poem%20Recitation%20in%20Robindro%20Utsob%202023.png' },
+      { title: 'Bosonto Utsob 2023', event: 'Spring Celebration · 2023', year: '2023', type: 'image', src: '/images/Bosonto%20Utsob%202023.png' },
+      { title: 'Receiving award for falgun utsob 2023', event: 'Spring Festival Award · 2023', year: '2023', type: 'image', src: '/images/Receiving%20award%20for%20falgun%20utsob%202023.png' },
+      { title: 'Drawing competition, 21 February 2023', event: 'Mother Language Day · 2023', year: '2023', type: 'image', src: '/images/Drawing%20competition,%2021%20February%202023.png' },
+    ];
+
+    const awards = [
+      { title: 'Best Performer', issuer: 'Milestone School & College', year: '2025', icon: '🏆', img: '/images/Best%20Performer.png' },
+      { title: 'Annual Dance Competition', issuer: 'Milestone School & College', year: '2024', icon: '💃', img: '/images/Annual%20Dance%20Competition.png' },
+      { title: 'Best All Rounder', issuer: 'Milestone School & College', year: '2024', icon: '⭐', img: '/images/Best%20All%20Rounder.png' },
+      { title: 'Poem Recitation', issuer: 'Milestone School & College', year: '2024', icon: '🎤', img: '/images/Poem%20Recitation.png' },
+      { title: 'Annual Cultural Programme', issuer: 'Milestone School & College', year: '2024', icon: '🎭', img: '/images/Annual%20Cultural%20Programme.png' },
+      { title: 'Best Discipline', issuer: 'Milestone School & College', year: '2023', icon: '✨', img: '/images/Best%20Discipline.png' },
+      { title: 'Dance Competition', issuer: 'Milestone School & College', year: '2024', icon: '💃', img: '/images/Dance%20Competition.jpg.png' },
+    ];
+
+    function initSlider() {
+      const slider = document.getElementById('slider');
+      const dots = document.getElementById('dots');
+      let currentIndex = 0;
+
+      // Create slides
+      programs.forEach((prog, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'slide' + (idx === 0 ? ' pos-center' : ' pos-prev');
+        slide.dataset.index = idx;
+        let mediaHTML = '';
+        if (prog.type === 'video') {
+          mediaHTML = `<video src="${prog.src}" class="slide-img" preload="none" poster="${prog.poster}"></video>`;
+        } else {
+          mediaHTML = `<img src="${prog.src}" alt="${prog.title}" class="slide-img" loading="lazy" decoding="async">`;
+        }
+        slide.innerHTML = `
+          <div class="slide-inner">
+            ${mediaHTML}
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); padding: 24px 20px 20px; color: white;">
+              <div style="font-weight: 600; font-size: 15px;">${prog.title}</div>
+              <div style="font-size: 12px; opacity: 0.85;">${prog.event}</div>
+            </div>
+          </div>
+        `;
+        slide.addEventListener('click', () => goToSlide(Array.from(slider.children).indexOf(slide)));
+        slider.appendChild(slide);
+      });
+
+      // Create dots
+      programs.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (idx === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goToSlide(idx));
+        dots.appendChild(dot);
+      });
+
+      function updateSlider() {
+        slider.querySelectorAll('.slide').forEach((slide, idx) => {
+          const diff = (idx - currentIndex + programs.length) % programs.length;
+          slide.classList.remove('pos-far-prev', 'pos-prev', 'pos-center', 'pos-next', 'pos-far-next');
+
+          if (diff === 0) slide.classList.add('pos-center');
+          else if (diff === 1) slide.classList.add('pos-next');
+          else if (diff === 2) slide.classList.add('pos-far-next');
+          else if (diff === programs.length - 1) slide.classList.add('pos-prev');
+          else if (diff === programs.length - 2) slide.classList.add('pos-far-prev');
+        });
+
+        dots.querySelectorAll('.dot').forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      }
+
+      function goToSlide(idx) {
+        currentIndex = idx;
+        updateSlider();
+      }
+
+      document.getElementById('prev-btn').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + programs.length) % programs.length;
+        updateSlider();
+      });
+
+      document.getElementById('next-btn').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % programs.length;
+        updateSlider();
+      });
+
+      // Keyboard nav
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') document.getElementById('prev-btn').click();
+        if (e.key === 'ArrowRight') document.getElementById('next-btn').click();
+      });
+
+      updateSlider();
+    }
+
+    function initAwards() {
+      const grid = document.getElementById('awards-grid');
+      awards.forEach((award, idx) => {
+        const card = document.createElement('div');
+        card.className = 'award-card reveal delay-' + Math.min(idx + 1, 4);
+        card.innerHTML = `
+          <div class="award-face award-front">
+            ${award.img ? `<img src="${award.img}" alt="${award.title} certificate" class="award-front-img" loading="lazy">` : `<div class="award-front-placeholder">${award.icon}</div>`}
+          </div>
+          <div class="award-face award-back">
+            <div class="award-title">${award.title}</div>
+            <div class="award-meta">${award.issuer}</div>
+            <div class="award-meta">${award.year}</div>
+          </div>
+        `;
+        card.addEventListener('click', () => card.classList.toggle('flipped'));
+        grid.appendChild(card);
+      });
+    }
+
+    function animateStats() {
+      const statValues = document.querySelectorAll('.stat-value');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const span = entry.target.querySelector('span');
+            const value = parseInt(span.textContent);
+            let current = 0;
+            const increment = Math.ceil(value / 30);
+            const interval = setInterval(() => {
+              current += increment;
+              if (current >= value) {
+                current = value;
+                clearInterval(interval);
+              }
+              span.textContent = current;
+            }, 30);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      statValues.forEach(el => observer.observe(el));
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      observeReveal();
+      initSlider();
+      initAwards();
+      animateStats();
+    });
+  </script>
+</body>
+</html>
