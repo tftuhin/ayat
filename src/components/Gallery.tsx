@@ -127,7 +127,7 @@ export default function Gallery() {
           </div>
         </div>
 
-        <div className="mt-24"></div>
+        <div className="mt-24" />
       </div>
     </section>
   );
