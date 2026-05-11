@@ -48,7 +48,7 @@ export default function Gallery() {
                 const position = getPosition(idx);
                 return (
                   <div
-                    key={idx}
+                    key={prog.title}
                     onClick={() => goTo(idx)}
                     className={`absolute w-64 h-80 rounded-3xl glass-strong overflow-hidden cursor-pointer transition-all duration-600 ${
                       position !== "hidden" ? "pointer-events-auto" : "pointer-events-none"
@@ -105,9 +105,9 @@ export default function Gallery() {
             </button>
 
             <div className="flex gap-1.5">
-              {slides.map((_, idx) => (
+              {slides.map((prog, idx) => (
                 <button
-                  key={idx}
+                  key={prog.title}
                   onClick={() => goTo(idx)}
                   className={`transition-all ${
                     idx === currentIndex
