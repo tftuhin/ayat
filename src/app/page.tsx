@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Gallery from "@/components/Gallery";
@@ -9,11 +9,7 @@ import Awards from "@/components/Awards";
 import Contact from "@/components/Contact";
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
-
     // Scroll reveal animation
     const observeReveal = () => {
       const obs = new IntersectionObserver(
@@ -33,10 +29,6 @@ export default function Home() {
 
     observeReveal();
   }, []);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <>
