@@ -42,7 +42,7 @@ export default function About() {
           Four skills woven into every performance — recitation, dance, storytelling and the bright stage presence that ties them together.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+        <div className="grid gap-5 mb-16" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
           {skills.map((skill, idx) => (
             <div
               key={skill.title}

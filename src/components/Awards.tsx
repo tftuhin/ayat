@@ -24,7 +24,7 @@ export default function Awards() {
           Certificates from cultural programs, competitions & national celebrations
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid gap-5" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
           {awards.map((award, idx) => (
             <div
               key={award.title}
