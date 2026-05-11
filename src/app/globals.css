@@ -126,58 +126,6 @@ body {
   border-radius: 32px;
 }
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  border: none;
-  transition: transform 0.25s cubic-bezier(.2,.9,.3,1.4), box-shadow 0.25s;
-  text-decoration: none;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--peach) 0%, var(--peach-deep) 100%);
-  color: white;
-  box-shadow: 0 12px 28px -10px rgba(166, 115, 82, 0.55), inset 0 1px 0 rgba(255,255,255,0.4);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 18px 38px -10px rgba(166, 115, 82, 0.65);
-}
-
-.btn-ghost {
-  background: rgba(255, 250, 245, 0.75);
-  backdrop-filter: blur(14px);
-  color: var(--ink);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-}
-
-.btn-ghost:hover {
-  transform: translateY(-2px);
-}
-
-/* Chip */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  background: rgba(255,255,255,0.7);
-  border: 1px solid var(--line);
-  color: var(--ink-soft);
-  backdrop-filter: blur(10px);
-}
 
 /* Hero Grid */
 .hero-grid {
@@ -202,22 +150,6 @@ body {
   overflow: hidden;
 }
 
-.slide-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.slide-arrow:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
 
 /* Awards */
 .award-card-wrap {

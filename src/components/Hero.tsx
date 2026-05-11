@@ -5,7 +5,6 @@ export default function Hero() {
     <section id="hero" className="section relative min-h-screen flex items-center">
       <div className="shell w-full">
         <div className="hero-grid">
-          {/* Left: Text Content */}
           <div>
             <div className="glass inline-flex items-center gap-3 px-4 py-2 mb-6 reveal">
               <span className="w-2 h-2 rounded-full bg-peach-deep shadow-lg"></span>
@@ -61,7 +60,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: Portrait */}
           <div className="relative aspect-square max-w-sm mx-auto w-full reveal delay-2">
             <div
               className="absolute inset-0 blur-2xl opacity-70 animate-blob-morph"

@@ -17,7 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#fbf6ef] text-[#3a2a1f] overflow-x-hidden">
-        {/* Background decorations */}
         <div
           className="fixed inset-0 -z-20 pointer-events-none"
           style={{

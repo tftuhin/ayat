@@ -10,7 +10,6 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   useEffect(() => {
-    // Scroll reveal animation
     const observeReveal = () => {
       const obs = new IntersectionObserver(
         (entries) => {
@@ -32,7 +31,6 @@ export default function Home() {
 
   return (
     <div className="relative overflow-hidden bg-[#fbf6ef]">
-      {/* Background decorations */}
       <div
         className="fixed inset-0 -z-20 pointer-events-none"
         style={{

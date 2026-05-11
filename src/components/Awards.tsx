@@ -43,7 +43,6 @@ export default function Awards() {
                   transform: flipped[idx] ? "rotateY(180deg)" : "rotateY(0deg)",
                 }}
               >
-                {/* Front */}
                 <div
                   className="absolute inset-0 glass-strong rounded-3xl p-5 flex flex-col items-center justify-center overflow-hidden"
                   style={{ backfaceVisibility: "hidden" }}
@@ -59,7 +58,6 @@ export default function Awards() {
                   )}
                 </div>
 
-                {/* Back */}
                 <div
                   className="absolute inset-0 bg-gradient-to-br from-peach to-peach-deep text-white rounded-3xl p-6 flex flex-col justify-center gap-4"
                   style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}

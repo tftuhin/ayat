@@ -41,7 +41,6 @@ export default function Gallery() {
           A scrapbook of cultural programs, rehearsals, and standout moments
         </p>
 
-        {/* Slider */}
         <div className="relative mb-12">
           <div className="coverflow-stage">
             <div className="absolute inset-0 flex items-center justify-center">
@@ -97,7 +96,6 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* Controls */}
           <div className="flex items-center justify-between absolute -bottom-16 left-0 right-0">
             <button
               onClick={prev}
